@@ -1,8 +1,10 @@
 package models;
 
 import org.hibernate.annotations.GenericGenerator;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 @Entity
@@ -10,12 +12,11 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    @OneToMany
-    @JoinColumn(name = "dni_usuario")
-    private Boleta boleta;
+    private int dni_usuario;
+    @OneToMany(mappedBy = "usuario")
+    private List<Boleta> boletas = new ArrayList<>();
 
     //Atributos.
-    private int dni_usuario;
     private String nombre_usuario;
     private String direccion_usuario;
     private String email_usuario;
@@ -23,15 +24,7 @@ public class Usuario {
 
     //Constructores.
     public Usuario() { }
-    public Usuario(int dni_usuario, String nombre_usuario, String direccion_usuario, String email_usuario, String role) {
-        this.dni_usuario = dni_usuario;
-        this.nombre_usuario = nombre_usuario;
-        this.direccion_usuario = direccion_usuario;
-        this.email_usuario = email_usuario;
-        this.role = role; }
-    public Usuario(Boleta boleta, int dni_usuario, String nombre_usuario, String direccion_usuario, String email_usuario, String role) {
-        this.boleta = boleta;
-        this.dni_usuario = dni_usuario;
+    public Usuario(String nombre_usuario, String direccion_usuario, String email_usuario, String role) {
         this.nombre_usuario = nombre_usuario;
         this.direccion_usuario = direccion_usuario;
         this.email_usuario = email_usuario;
@@ -43,7 +36,7 @@ public class Usuario {
     public String getDireccion_usuario() { return direccion_usuario; }
     public String getEmail_usuario() { return email_usuario; }
     public String getRole() { return role; }
-    public Boleta getBoleta() { return boleta; }
+    public List<Boleta> getBoleta() { return boletas; }
 
     //Setters.
     public void setDni_usuario(int dni_usuario) { this.dni_usuario = dni_usuario; }
@@ -51,8 +44,7 @@ public class Usuario {
     public void setDireccion_usuario(String direccion_usuario) { this.direccion_usuario = direccion_usuario; }
     public void setEmail_usuario(String email_usuario) { this.email_usuario = email_usuario; }
     public void setRole(String role) { this.role = role; }
-    public void setBoleta(Boleta boleta) { this.boleta = boleta; }
+    public void addBoleta(Boleta boleta) { this.boletas.add(boleta); }
 
-    //Metodos.
 
 }

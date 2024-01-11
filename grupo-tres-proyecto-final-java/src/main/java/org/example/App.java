@@ -15,6 +15,7 @@ public class App
     static UsuarioDAO usuarioDAO = new UsuarioDAO();
     public static void main( String[] args )
     {
+
         System.out.println("Tienda abierta");
 
         Scanner scanner = new Scanner(System.in);
@@ -42,9 +43,9 @@ public class App
         Usuario usuario;
 
         if (respuesta.equals("1")){
-            usuario = new Usuario(dni,nombre,direccion,email,"admin");
+            usuario = new Usuario(nombre,direccion,email,"admin");
         }else {
-            usuario = new Usuario(dni,nombre,direccion,email,"cliente");
+            usuario = new Usuario(nombre,direccion,email,"cliente");
         }
 
         usuarioDAO.insert(usuario);
