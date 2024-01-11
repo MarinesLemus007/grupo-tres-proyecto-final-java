@@ -1,11 +1,9 @@
 package org.example.until;
 
-
-//import org.example.models.Socio;
-//import org.example.models.Libro;
-//import org.example.models.Genero;
-//import org.example.models.Autor;
-//import org.example.models.Prestamo;
+import models.Boleta;
+import models.Compra;
+import models.Producto;
+import models.Usuario;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -39,11 +37,10 @@ public class HibernateUtil {
 
                 configuration.setProperties(settings);
                 //Asociar las clases
-                //configuration.addAnnotatedClass(Socio.class);
-                //configuration.addAnnotatedClass(Libro.class);
-                //configuration.addAnnotatedClass(Genero.class);
-                //configuration.addAnnotatedClass(Autor.class);
-                //configuration.addAnnotatedClass(Prestamo.class);
+                configuration.addAnnotatedClass(Boleta.class);
+                configuration.addAnnotatedClass(Compra.class);
+                configuration.addAnnotatedClass(Producto.class);
+                configuration.addAnnotatedClass(Usuario.class);
                 //Servicio de parametros de conexion
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();

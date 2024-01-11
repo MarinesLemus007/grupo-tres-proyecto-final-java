@@ -55,22 +55,4 @@ public class Usuario {
 
     //Metodos.
 
-    public static Usuario createUsuario(String op){
-
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese su DNI");
-        int dni = scanner.nextInt();
-        System.out.println("Ingrese su nombre de usuario");
-        String nombre = scanner.nextLine();
-        System.out.println("Ingrese su direccion");
-        String direccion = scanner.nextLine();
-        System.out.println("Ingrese su email");
-        String email = scanner.nextLine();
-
-        if (op.equals("1")){
-            return new Usuario(dni,nombre,direccion,email,"admin");
-        }else {
-            return new Usuario(dni,nombre,direccion,email,"usuario");
-        }
-    }
 }
