@@ -33,19 +33,20 @@ public class App
         Scanner scanner = new Scanner(System.in);
         System.out.println("Ingrese su DNI");
         int dni = scanner.nextInt();
+        scanner.nextLine();
         System.out.println("Ingrese su nombre de usuario");
-        String nombre = scanner.next();
+        String nombre = scanner.nextLine();
         System.out.println("Ingrese su direccion");
-        String direccion = scanner.next();
+        String direccion = scanner.nextLine();
         System.out.println("Ingrese su email");
         String email = scanner.next();
 
         Usuario usuario;
 
         if (respuesta.equals("1")){
-            usuario = new Usuario(nombre,direccion,email,"admin");
+            usuario = new Usuario(dni,nombre,direccion,email,"admin");
         }else {
-            usuario = new Usuario(nombre,direccion,email,"cliente");
+            usuario = new Usuario(dni,nombre,direccion,email,"cliente");
         }
 
         usuarioDAO.insert(usuario);
