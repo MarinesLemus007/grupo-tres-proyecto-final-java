@@ -1,11 +1,10 @@
 package org.example.until;
 
 
-//import org.example.models.Socio;
-//import org.example.models.Libro;
-//import org.example.models.Genero;
-//import org.example.models.Autor;
-//import org.example.models.Prestamo;
+import models.Boleta;
+import models.Compra;
+import models.Producto;
+import models.Usuario;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -26,7 +25,7 @@ public class HibernateUtil {
                 // Propiedades de conexio de Hibernate
                 Properties settings = new Properties();
                 settings.put(Environment.DRIVER, "org.postgresql.Driver");
-                settings.put(Environment.URL, "jdbc:postgresql://localhost:5432/proyecto_final");
+                settings.put(Environment.URL, "jdbc:postgresql://localhost:5432/proyecto");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
                 settings.put(Environment.USER, "marineslemus");
                 settings.put(Environment.PASS, "postgres");
@@ -39,11 +38,10 @@ public class HibernateUtil {
 
                 configuration.setProperties(settings);
                 //Asociar las clases
-                //configuration.addAnnotatedClass(Socio.class);
-                //configuration.addAnnotatedClass(Libro.class);
-                //configuration.addAnnotatedClass(Genero.class);
-                //configuration.addAnnotatedClass(Autor.class);
-                //configuration.addAnnotatedClass(Prestamo.class);
+                configuration.addAnnotatedClass(Usuario.class);
+                configuration.addAnnotatedClass(Boleta.class);
+                configuration.addAnnotatedClass(Compra.class);
+                configuration.addAnnotatedClass(Producto.class);
                 //Servicio de parametros de conexion
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
