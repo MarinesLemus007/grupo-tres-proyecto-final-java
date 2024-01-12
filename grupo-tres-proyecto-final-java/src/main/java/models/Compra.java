@@ -32,19 +32,18 @@ public class Compra {
 
     //Constructores.
     public Compra() { }
-    public Compra(long numero_compra, int cantidad_producto, boolean esta_pagada, BigDecimal total_compra, Date fecha_compra) {
-        this.numero_compra = numero_compra;
+    public Compra(int cantidad_producto, boolean esta_pagada, BigDecimal total_compra) {
         this.cantidad_producto = cantidad_producto;
         this.esta_pagada = esta_pagada;
         this.total_compra = total_compra;
-        this.fecha_compra = fecha_compra; }
-    public Compra(Boleta boleta, long numero_compra, int cantidad_producto, boolean esta_pagada, BigDecimal total_compra, Date fecha_compra) {
+        this.fecha_compra = new Date(); }
+    public Compra(Boleta boleta, long numero_compra, int cantidad_producto, boolean esta_pagada, BigDecimal total_compra) {
         this.boleta = boleta;
         this.numero_compra = numero_compra;
         this.cantidad_producto = cantidad_producto;
         this.esta_pagada = esta_pagada;
         this.total_compra = total_compra;
-        this.fecha_compra = fecha_compra; }
+        this.fecha_compra = new Date();}
 
     //Getters.
 

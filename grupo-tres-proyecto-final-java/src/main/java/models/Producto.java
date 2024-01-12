@@ -20,8 +20,7 @@ public class Producto {
 
     //Constructores.
     public Producto() { }
-    public Producto(long codigo_producto, String nombre_producto, BigDecimal precio_producto, String descripcion_producto) {
-        this.codigo_producto = codigo_producto;
+    public Producto(String nombre_producto, BigDecimal precio_producto, String descripcion_producto) {
         this.nombre_producto = nombre_producto;
         this.precio_producto = precio_producto;
         this.descripcion_producto = descripcion_producto;
