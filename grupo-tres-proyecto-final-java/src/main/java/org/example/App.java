@@ -1,6 +1,10 @@
 package org.example;
 
+import dao.CompraDAO;
+import dao.ProductoDAO;
 import dao.UsuarioDAO;
+import models.Compra;
+import models.Producto;
 import models.Usuario;
 
 import java.util.Scanner;
@@ -26,6 +30,20 @@ public class App
 
             crearUsuario(respuesta);
         }
+
+        //Crear Producto
+        ProductoDAO productoDAO = new ProductoDAO();
+        Producto newProducto = new Producto("Silla Gamer", 250000, "Silla gamer ergonómica color amarillo");
+        productoDAO.insert(newProducto);
+        Producto foundProducto = productoDAO.findById(newProducto.getCodigo_producto());
+        System.out.println("foundProducto = " + foundProducto);
+
+        //Crear Compra
+        CompraDAO compraDAO = new CompraDAO();
+        Compra newCompra = new Compra(1, 2, true, 250000);
+        compraDAO.insert(newCompra);
+        Compra foundCompra = compraDAO.findById(newCompra.getNumero_compra());
+        System.out.println("foundCompra = " + foundCompra);
     }
 
     public static boolean crearUsuario(String respuesta){
