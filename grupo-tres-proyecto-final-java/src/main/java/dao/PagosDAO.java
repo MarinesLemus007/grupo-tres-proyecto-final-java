@@ -1,7 +1,6 @@
 package dao;
 
-import models.Compra;
-import models.Usuario;
+import models.Pagos;
 import org.example.until.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -9,30 +8,30 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class UsuarioDAO {
+public class PagosDAO {
 
-    public Usuario findById(Long id) {
+    public Pagos findById(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(Usuario.class, id);
+            return session.get(Pagos.class, id);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public List<Usuario> findAll() {
+    public List<Pagos> findAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Usuario", Usuario.class).list();
+            return session.createQuery("FROM Pagos", Pagos.class).list();
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public List<Usuario> findByName(String nombre_usuario) {
+    public List<Pagos> findByCompra(int compra) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Usuario> query = session.createQuery("FROM Usuario WHERE nombre_usuario = :nombre_usuario", Usuario.class);
-            query.setParameter("nombre_usuario", nombre_usuario);
+            Query<Pagos> query = session.createQuery("FROM Pagos WHERE compra = :compra", Pagos.class);
+            query.setParameter("compra", compra);
             return query.list();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -40,11 +39,11 @@ public class UsuarioDAO {
         }
     }
 
-    public void insert(Usuario usuario) {
+    public void insert(Pagos pagos) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.save(usuario);
+            session.save(pagos);
             transaction.commit();
         } catch (Exception ex) {
             if (transaction != null) {
@@ -54,11 +53,11 @@ public class UsuarioDAO {
         }
     }
 
-    public void update(Usuario usuario) {
+    public void update(Pagos pagos) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.update(usuario);
+            session.update(pagos);
             transaction.commit();
         } catch (Exception ex) {
             if (transaction != null) {
@@ -68,11 +67,11 @@ public class UsuarioDAO {
         }
     }
 
-    public void delete(Usuario usuario) {
+    public void delete(Pagos pagos) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.delete(usuario);
+            session.delete(pagos);
             transaction.commit();
         } catch (Exception ex) {
             if (transaction != null) {
@@ -81,25 +80,4 @@ public class UsuarioDAO {
             ex.printStackTrace();
         }
     }
-
-    public void addCompraToUsuario(Long dni_usuario, Compra compra){
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            transaction = session.beginTransaction();
-            Usuario usuario = session.get(Usuario.class, dni_usuario);
-            if (usuario != null){
-                usuario.addCompra(compra);
-                session.saveOrUpdate(usuario);
-            }
-            transaction.commit();
-        }catch (Exception ex){
-            if (transaction != null){
-                transaction.rollback();
-            }
-            ex.printStackTrace();
-        }
-
-    }
-
-
 }

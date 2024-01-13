@@ -1,6 +1,7 @@
 package dao;
 
 import models.Compra;
+import models.Pagos;
 import org.example.until.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -74,6 +75,25 @@ public class CompraDAO {
             transaction.commit();
         } catch (Exception ex) {
             if (transaction != null) {
+                transaction.rollback();
+            }
+            ex.printStackTrace();
+        }
+    }
+
+    public void addPagoToCompra(int numero_compra, Pagos pagos){
+        Transaction transaction = null;
+        try (Session session= HibernateUtil.getSessionFactory().openSession()){
+            transaction = session.beginTransaction();
+            //obtener total compra
+            Compra compra = session.get(Compra.class, numero_compra);
+            if (compra != null){
+                compra.pagoRealizado();
+                session.saveOrUpdate(compra);
+            }
+            transaction.commit();
+        }catch (Exception ex){
+            if (transaction !=null){
                 transaction.rollback();
             }
             ex.printStackTrace();

@@ -59,5 +59,10 @@ public class Compra {
     public void setBoleta(Boleta boleta) { this.boleta = boleta; }
 
 
+    public  boolean pagoRealizado(){
+        return esta_pagada;
+    }
+
+
 }
 

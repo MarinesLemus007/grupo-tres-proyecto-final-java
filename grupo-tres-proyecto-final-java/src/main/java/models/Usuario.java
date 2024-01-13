@@ -2,6 +2,7 @@ package models;
 
 import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.*;
+import org.hibernate.annotations.SourceType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,16 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<Boleta> boletas = new ArrayList<>();
 
+    @OneToMany(mappedBy = "compras")
+    private List<Compra> compras = new ArrayList<>();
+
+
     //Atributos.
     private String nombre_usuario;
     private String direccion_usuario;
     private String email_usuario;
     private String role;
+
 
     //Constructores.
     public Usuario() { }
@@ -46,6 +52,14 @@ public class Usuario {
     public void setEmail_usuario(String email_usuario) { this.email_usuario = email_usuario; }
     public void setRole(String role) { this.role = role; }
     public void addBoleta(Boleta boleta) { this.boletas.add(boleta); }
+
+    public void historialComra(){
+        System.out.println("Historial de pedidos de: "+ this.nombre_usuario+" ");
+        for (Compra compra : this.compras){
+            System.out.println(compra);
+        }
+    }
+    public void addCompra(Compra compra) { this.compras.add(compra); }
 
 
 }

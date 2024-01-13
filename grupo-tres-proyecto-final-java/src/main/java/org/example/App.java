@@ -15,7 +15,6 @@ import java.util.Scanner;
  */
 public class App 
 {
-
     static UsuarioDAO usuarioDAO = new UsuarioDAO();
     public static void main( String[] args )
     {
@@ -44,10 +43,10 @@ public class App
         compraDAO.insert(newCompra);
         Compra foundCompra = compraDAO.findById(newCompra.getNumero_compra());
         System.out.println("foundCompra = " + foundCompra);
+        //System.out.println("Ingrese monto a pagar: "+ newCompra.setTotal_compra(9990));
     }
 
     public static boolean crearUsuario(String respuesta){
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("Ingrese su DNI");
         int dni = scanner.nextInt();
@@ -58,17 +57,15 @@ public class App
         String direccion = scanner.nextLine();
         System.out.println("Ingrese su email");
         String email = scanner.next();
-
         Usuario usuario;
-
         if (respuesta.equals("1")){
             usuario = new Usuario(dni,nombre,direccion,email,"admin");
         }else {
             usuario = new Usuario(dni,nombre,direccion,email,"cliente");
         }
-
         usuarioDAO.insert(usuario);
         return  true;
     }
+
 
 }
