@@ -13,6 +13,8 @@ public class Compra {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long numero_compra;
+    private long dni_comprador;
+    private long codigo_producto_compra;
     private int cantidad_producto;
     private boolean esta_pagada;
     private BigDecimal total_compra;
@@ -32,7 +34,9 @@ public class Compra {
 
     //Constructores.
     public Compra() { }
-    public Compra(int cantidad_producto, boolean esta_pagada, BigDecimal total_compra) {
+    public Compra(long dni_comprador, long codigo_producto_compra, int cantidad_producto, boolean esta_pagada, BigDecimal total_compra) {
+        this.codigo_producto_compra = codigo_producto_compra;
+        this.dni_comprador = dni_comprador;
         this.cantidad_producto = cantidad_producto;
         this.esta_pagada = esta_pagada;
         this.total_compra = total_compra;
@@ -54,8 +58,9 @@ public class Compra {
     public Date getFecha_compra() { return fecha_compra; }
     public List<Producto> getProductos() { return productos;}
     public Boleta getBoleta() { return boleta; }
-
-    //Setters.
+    public long getDni_comprador() { return dni_comprador; }
+    public long getCodigo_producto_compra() { return codigo_producto_compra;}
+//Setters.
 
     public void setNumero_compra(long numero_compra) { this.numero_compra = numero_compra; }
     public void setCantidad_producto(int cantidad_producto) { this.cantidad_producto = cantidad_producto; }
@@ -64,6 +69,8 @@ public class Compra {
     public void setFecha_compra(Date fecha_compra) { this.fecha_compra = fecha_compra; }
     public void setProductos(List<Producto> productos) { this.productos = productos; }
     public void setBoleta(Boleta boleta) { this.boleta = boleta; }
+    public void setDni_comprador(long dni_comprador) { this.dni_comprador = dni_comprador; }
+    public void setCodigo_producto_compra(long codigo_producto_compra) { this.codigo_producto_compra = codigo_producto_compra; }
 
     //Metodos.
 }
