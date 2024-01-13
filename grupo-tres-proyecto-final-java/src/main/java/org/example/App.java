@@ -202,6 +202,8 @@ public class App
                             scanner.nextLine();
                             //Creación de compra
                             Compra newCompra = new Compra(dni_usuario_role, codigo_producto_compra, cantidad_producto_compra, true, precioProducto);
+                            Producto productoAgregado = productoDAO.findById(codigo_producto_compra);
+                            newCompra.getProductos().add(productoAgregado);
                             compraDAO.insert(newCompra);
                             Compra foundCompra = compraDAO.findById(newCompra.getNumero_compra());
 

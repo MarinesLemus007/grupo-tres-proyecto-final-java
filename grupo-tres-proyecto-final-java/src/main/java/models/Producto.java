@@ -15,7 +15,7 @@ public class Producto {
     private BigDecimal precio_producto;
     private String descripcion_producto;
 
-     @ManyToMany(mappedBy = "productos", cascade = CascadeType.ALL)
+     @ManyToMany(mappedBy = "productos")
      private List<Compra> compras;
 
     //Constructores.

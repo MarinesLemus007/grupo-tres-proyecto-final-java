@@ -19,14 +19,15 @@ public class Compra {
     private boolean esta_pagada;
     private BigDecimal total_compra;
     private Date fecha_compra;
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Producto> productos = new ArrayList<>();
     /*@ManyToMany(cascade = CascadeType.ALL)
+    private List<Producto> productos = new ArrayList<>();*/
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "compra_producto",
-            joinColumns = @JoinColumn(name = "numero_compra"),
-            inverseJoinColumns = @JoinColumn(name = "codigo_producto"))
-    private List<Producto> productos = new ArrayList<>();*/
+            joinColumns = @JoinColumn(name = "numero_compra", referencedColumnName = "numero_compra"),
+            inverseJoinColumns = @JoinColumn(name = "codigo_producto", referencedColumnName = "codigo_producto")
+    )
+    private List<Producto> productos = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn (name = "codigo_producto")
