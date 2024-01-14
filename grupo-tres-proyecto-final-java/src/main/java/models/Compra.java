@@ -74,5 +74,19 @@ public class Compra {
     public void setCodigo_producto_compra(long codigo_producto_compra) { this.codigo_producto_compra = codigo_producto_compra; }
 
     //Metodos.
+
+    public void totalCompra(){
+        BigDecimal total_compra_realizada = getTotal_compra().multiply(BigDecimal.valueOf(getCantidad_producto()));
+        setTotal_compra(total_compra_realizada);
+    }
+    /*public void verBoletas( long dni_usuario_logeado){
+        System.out.println(
+                "______________________\n" +
+                "COD BOLETA " + getNumero_compra() + "\n" +
+                getCantidad_producto() + " " + getProductos().get(0) + " " + getTotal_compra() + "\n" +
+                        "______________________"
+        );
+
+    }*/
 }
 

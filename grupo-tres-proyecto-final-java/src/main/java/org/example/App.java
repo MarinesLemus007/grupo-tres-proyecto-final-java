@@ -10,6 +10,8 @@ import dao.CompraDAO;
 import models.Compra;
 import dao.ProductoDAO;
 import models.Producto;
+
+import javax.persistence.NoResultException;
 import java.math.BigDecimal;
 
 /**
@@ -23,9 +25,10 @@ public class App
 
         String nombre_usuario_role = "", direccion_usuario_role = "", email_usuario_role = "", mensaje = "", nombre_producto_creacion = "", descripcion_producto_creacion = "";
         long dni_usuario_role = 0, codigo_producto_compra = 0;
-        int respuesta_role, opcion_menu_admin;
+        int respuesta_role, opcion_menu_admin, cantidad_producto_compra = 0;
         BigDecimal precio_producto_creacion;
-        boolean itera_menu_inicial = false, itera_enrolamiento, itera_menu_admin_crear_producto = true;
+        boolean itera_menu_inicial = false, itera_enrolamiento, itera_menu_admin_crear_producto = true, itera_cod_producto = false, itera_cantidad_compra = false;
+        List<Producto> productoExistente;
 
         Scanner scanner = new Scanner(System.in);
 
@@ -189,40 +192,64 @@ public class App
                             System.out.println("---------------------------\n");
                         }
 
-                        System.out.println("Por favor, escribe el código del producto \n");
-                        codigo_producto_compra = scanner.nextLong();
-                        scanner.nextLine();
-                        List<Producto> productoExistente = productoDAO.findByName(codigo_producto_compra);
+                        do {
+                            System.out.println("Por favor, escribe el código del producto \n");
+                            try {
+                                codigo_producto_compra = scanner.nextLong();
+                                productoExistente = productoDAO.findByName(codigo_producto_compra);
+                                BigDecimal precioProducto = productoExistente.getFirst().getPrecio_producto();
 
-                        if (productoExistente != null) {
-                            BigDecimal precioProducto = productoExistente.getFirst().getPrecio_producto();
+                                do {
+                                    System.out.println("\nIngrese cuantos quiere llevar:");
+                                    try {
+                                        cantidad_producto_compra = scanner.nextInt();
+                                        scanner.nextLine();
 
-                            System.out.println("\nIngrese cuantos quiere llevar:");
-                            int cantidad_producto_compra = scanner.nextInt();
-                            scanner.nextLine();
-                            //Creación de compra
-                            Compra newCompra = new Compra(dni_usuario_role, codigo_producto_compra, cantidad_producto_compra, true, precioProducto);
-                            Producto productoAgregado = productoDAO.findById(codigo_producto_compra);
-                            newCompra.getProductos().add(productoAgregado);
-                            compraDAO.insert(newCompra);
-                            Compra foundCompra = compraDAO.findById(newCompra.getNumero_compra());
+                                        if (cantidad_producto_compra > 0) {
+                                            //Creación de Compra
+                                            Compra newCompra = new Compra(dni_usuario_role, codigo_producto_compra, cantidad_producto_compra, true, precioProducto);
+                                            newCompra.totalCompra();
+                                            Producto productoAgregado = productoDAO.findById(codigo_producto_compra);
+                                            newCompra.getProductos().add(productoAgregado);
+                                            compraDAO.insert(newCompra);
+                                            Compra foundCompra = compraDAO.findById(newCompra.getNumero_compra());
 
-                            String cp1 = String.valueOf(foundCompra.getCantidad_producto());
-                            String tc1 = String.valueOf(foundCompra.getTotal_compra());
 
-                            double cp2 = Double.parseDouble(cp1);
-                            double tc2 = Double.parseDouble(tc1);
+                                            /*String cp1 = String.valueOf(foundCompra.getCantidad_producto());
+                                            String tc1 = String.valueOf(foundCompra.getTotal_compra());
 
-                            double total_compra_realizada = cp2 * tc2;
+                                            double cp2 = Double.parseDouble(cp1);
+                                            double tc2 = Double.parseDouble(tc1);
 
-                            System.out.println("\nSe ha creado la siguiente Compra\n" +
-                                    "Número de la compra : "+ foundCompra.getNumero_compra() +"\n" +
-                                    "Código de Producto : "+ foundCompra.getCodigo_producto_compra() +"\n" +
-                                    "Precio : "+  foundCompra.getTotal_compra() +"\n" +
-                                    "Total : " + total_compra_realizada);
-                        } else {
-                            System.out.println("El código de producto ingresado no existe, inténtelo nuevamente");
-                        }
+                                            double total_compra_realizada = cp2 * tc2;*/
+
+                                            System.out.println("\nSe ha creado la siguiente Compra\n" +
+                                                    "Número de la compra : " + foundCompra.getNumero_compra() + "\n" +
+                                                    "Código de Producto : " + foundCompra.getCodigo_producto_compra() + "\n" +
+                                                    "Cantidad : " + foundCompra.getCantidad_producto() + "\n" +
+                                                    "Total : " + foundCompra.getTotal_compra());
+
+                                            itera_cantidad_compra = false;
+                                            itera_cod_producto = false;
+                                        } else {
+                                            System.out.println("\nLa cantidad ingresada no es válida. inténtelo nuevamente\n");
+                                            itera_cantidad_compra = true;
+                                        }
+                                    }catch (InputMismatchException e){
+                                        System.out.println("\nPor favor, ingrese un número entero mayor a cero\n");
+                                        scanner.nextLine();
+                                        itera_cantidad_compra = true;
+                                    }
+
+                                }while(itera_cantidad_compra);
+
+                            }catch (NoSuchElementException e){
+                                System.out.println("\nEl código de producto ingresado no existe, inténtelo nuevamente\n");
+                                scanner.nextLine();
+                                itera_cod_producto = true;
+                            }
+
+                        }while (itera_cod_producto);
 
                         break;
                     case 2:
