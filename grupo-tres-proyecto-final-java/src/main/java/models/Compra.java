@@ -65,7 +65,7 @@ public class Compra {
         return true;
     }
 
-    public  boolean pagoRealizado(double monto){
+    public  boolean pagoRealizado(boolean esta_pagada){
         return esta_pagada;
     }
 

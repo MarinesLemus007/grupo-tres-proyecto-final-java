@@ -73,7 +73,7 @@ public class App
         double monto = scanner.nextDouble();
         //Compra compra;
         boolean p = true;
-        if (compra.pagoRealizado(monto)) {
+        if (compra.realizarPago((int)monto)) {
              p = monto > 0;
             System.out.println("Pago exitoso, gracias por su compra");
         } else {

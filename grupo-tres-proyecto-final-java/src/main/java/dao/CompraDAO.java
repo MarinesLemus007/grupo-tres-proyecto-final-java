@@ -88,7 +88,7 @@ public class CompraDAO {
             //obtener total compra
             Compra compra = session.get(Compra.class, numero_compra);
             if (compra != null){
-                compra.pagoRealizado();
+                compra.pagoRealizado(true);
                 session.saveOrUpdate(compra);
             }
             transaction.commit();
