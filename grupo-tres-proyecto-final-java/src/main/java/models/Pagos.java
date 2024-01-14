@@ -64,4 +64,6 @@ public class Pagos {
     public void setCompra(Compra compra) {
         this.compra = compra;
     }
+
+
 }

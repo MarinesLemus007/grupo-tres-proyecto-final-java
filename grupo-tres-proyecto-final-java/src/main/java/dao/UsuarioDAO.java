@@ -1,6 +1,6 @@
 package dao;
 
-import models.Compra;
+import models.Boleta;
 import models.Usuario;
 import org.example.until.HibernateUtil;
 import org.hibernate.Session;
@@ -82,13 +82,13 @@ public class UsuarioDAO {
         }
     }
 
-    public void addCompraToUsuario(Long dni_usuario, Compra compra){
+    public void addBoletaToUsuario(Long dni_usuario, Boleta boleta){
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             transaction = session.beginTransaction();
             Usuario usuario = session.get(Usuario.class, dni_usuario);
             if (usuario != null){
-                usuario.addCompra(compra);
+                usuario.addBoleta(boleta);
                 session.saveOrUpdate(usuario);
             }
             transaction.commit();
@@ -98,7 +98,6 @@ public class UsuarioDAO {
             }
             ex.printStackTrace();
         }
-
     }
 
 

@@ -13,11 +13,15 @@ public class Boleta {
     @GenericGenerator(name = "native", strategy = "native")
     private int numero_compra;
 
+
     private String informacion_compra;
     @OneToMany( mappedBy = "boleta")
     private List<Compra> compras = new ArrayList<>();
     @ManyToOne
     private Usuario usuario;
+
+    private List<Boleta> boletas = new ArrayList<>();
+
 
     //Constructores.
     public Boleta() { }

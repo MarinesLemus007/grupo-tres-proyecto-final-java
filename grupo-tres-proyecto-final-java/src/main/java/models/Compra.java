@@ -2,6 +2,7 @@ package models;
 
 import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Struct;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,7 +46,7 @@ public class Compra {
     //Getters.
     public long getNumero_compra() { return numero_compra; }
     public int getCantidad_producto() { return cantidad_producto; }
-    public boolean isEsta_pagada() { return esta_pagada; }
+    //public boolean isEsta_pagada() { return esta_pagada; }
     public int getTotal_compra() { return total_compra; }
     public Date getFecha_compra() { return fecha_compra; }
     public Boleta getBoleta() { return boleta; }
@@ -59,7 +60,12 @@ public class Compra {
     public void setBoleta(Boleta boleta) { this.boleta = boleta; }
 
 
-    public  boolean pagoRealizado(){
+    public boolean realizarPago(int total_compra){
+        System.out.println("Procesando pago de $"+ total_compra);
+        return true;
+    }
+
+    public  boolean pagoRealizado(double monto){
         return esta_pagada;
     }
 

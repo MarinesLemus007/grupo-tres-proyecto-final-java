@@ -29,7 +29,7 @@ public class BoletaDAO {
 
     public List<Boleta> findByName(String numero_compra) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Boleta> query = session.createQuery("FROM Boleta WHERE numero_compra = :numero_compra", Boleta.class);
+            Query<Boleta> query = session.createQuery("FROM Boleta WHERE numero_compra = :numero_compra and dni_usuario= :dni_usuario", Boleta.class);
             query.setParameter("numero_compra", numero_compra);
             return query.list();
         } catch (Exception ex) {
