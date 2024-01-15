@@ -1,97 +1,59 @@
 package models;
-
-import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
-
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.List;
-import java.util.Map;
-
+import java.util.ArrayList;
 @Entity
 public class Usuario {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
-    private long dni_usuario;
-    @OneToMany(mappedBy = "usuario")
-    private List<Boleta> boletas = new ArrayList<>();
-
 
     //Atributos.
+    @Id
+    private long dni_usuario;
     private String nombre_usuario;
     private String direccion_usuario;
     private String email_usuario;
     private String role;
-
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Boleta> boletas;
 
     //Constructores.
     public Usuario() { }
-
     public Usuario(long dni_usuario, String nombre_usuario, String direccion_usuario, String email_usuario, String role) {
-        this.dni_usuario = (int) dni_usuario;
+        this.dni_usuario = dni_usuario;
         this.nombre_usuario = nombre_usuario;
         this.direccion_usuario = direccion_usuario;
         this.email_usuario = email_usuario;
         this.role = role;
+        this.boletas = new ArrayList<>();
     }
 
     //Getters.
-    public long getDni_usuario() {
-        return dni_usuario;
-    }
-
-    public String getNombre_usuario() {
-        return nombre_usuario;
-    }
-
-    public String getDireccion_usuario() {
-        return direccion_usuario;
-    }
-
-    public String getEmail_usuario() {
-        return email_usuario;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public List<Boleta> getBoleta() {
+    public long getDni_usuario() { return dni_usuario; }
+    public String getNombre_usuario() { return nombre_usuario; }
+    public String getDireccion_usuario() { return direccion_usuario; }
+    public String getEmail_usuario() { return email_usuario; }
+    public String getRole() { return role; }
+    public List<Boleta> getBoletas() {
         return boletas;
     }
 
-
     //Setters.
-    public void setDni_usuario(long dni_usuario) {
-        this.dni_usuario = dni_usuario;
-    }
+    public void setDni_usuario(long dni_usuario) { this.dni_usuario = dni_usuario; }
+    public void setNombre_usuario(String nombre_usuario) { this.nombre_usuario = nombre_usuario; }
+    public void setDireccion_usuario(String direccion_usuario) { this.direccion_usuario = direccion_usuario; }
+    public void setEmail_usuario(String email_usuario) { this.email_usuario = email_usuario; }
+    public void setRole(String role) { this.role = role; }
+    public void setBoletas(List<Boleta> boletas) { this.boletas = boletas; }
 
-    public void setNombre_usuario(String nombre_usuario) {
-        this.nombre_usuario = nombre_usuario;
-    }
+    //Metodos.
+    /*public List<String> generarInfoBoletas() {
+        List<String> infoBoletas = new ArrayList<>();
 
-    public void setDireccion_usuario(String direccion_usuario) {
-        this.direccion_usuario = direccion_usuario;
-    }
+        for (Boleta boleta : boletas) {
+            List<String> infoConsolidada = boleta.obtenerInfoCompraConsolidada();
+            infoBoletas.addAll(infoConsolidada);
+        }
 
-    public void setEmail_usuario(String email_usuario) {
-        this.email_usuario = email_usuario;
-    }
+        return infoBoletas;
+    }*/
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public void addBoleta(Boleta boleta) {
-        this.boletas.add(boleta);
-    }
-
-
-    public List<Boleta> obtenerBoletas(int dni) {
-        if (dni_usuario == dni) {
-            for (Boleta boleta : this.boletas) {
-                System.out.println(boleta);
-            }
-        } return boletas;
-    }
 }

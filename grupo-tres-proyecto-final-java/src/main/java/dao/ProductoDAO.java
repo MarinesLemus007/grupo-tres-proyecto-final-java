@@ -27,7 +27,7 @@ public class ProductoDAO {
         }
     }
 
-    public List<Producto> findByName(int codigo_producto) {
+    public List<Producto> findByName(long codigo_producto) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Producto> query = session.createQuery("FROM Producto WHERE codigo_producto = :codigo_producto", Producto.class);
             query.setParameter("codigo_producto", codigo_producto);

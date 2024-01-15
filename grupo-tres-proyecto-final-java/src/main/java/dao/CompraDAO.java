@@ -79,25 +79,4 @@ public class CompraDAO {
             ex.printStackTrace();
         }
     }
-
-    public void addPagoToCompra(int numero_compra){
-        Transaction transaction = null;
-        try (Session session= HibernateUtil.getSessionFactory().openSession()){
-            transaction = session.beginTransaction();
-            //obtener total compra
-            Compra compra = session.get(Compra.class, numero_compra);
-            if (compra != null){
-                compra.pagoRealizado(true);
-                session.saveOrUpdate(compra);
-            }
-            transaction.commit();
-        }catch (Exception ex){
-            if (transaction !=null){
-                transaction.rollback();
-            }
-            ex.printStackTrace();
-        }
-    }
-
-
 }
