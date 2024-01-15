@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/*@Entity
+@Entity
 public class Boleta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -65,65 +65,23 @@ public class Boleta {
         }
         return infoConsolidada;
     }
-}*/
-
-@Entity
-public class Boleta {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
-    private long id;
-
-    @OneToMany(mappedBy = "boleta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Compra> compras = new ArrayList<>();
-
-    /*@ManyToOne
-    private Usuario usuario;*/
-
-    @ManyToOne
-    @JoinColumn(name = "usuario_dni_usuario")
-    private Usuario usuario;
-
-    // Otros atributos y métodos
-
-    public Boleta() {}
-
-    // Getters y setters
+}
 
 
-    public long getId() {
-        return id;
-    }
-
-    public List<Compra> getCompras() {
-        return compras;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setCompras(List<Compra> compras) {
-        this.compras = compras;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
 
     // Método para agregar una compra a la boleta
-    public void agregarCompra(Compra compra) {
+    /*public void agregarCompra(Compra compra) {
         compras.add(compra);
         compra.setBoleta(this);
 
-        for (String s : Arrays.asList("Compra agregada a Boleta: " + compra.getBoleta().getCompras(), "Productos en la compra: " + compra.getProductos().size())) {
-            System.out.println(s);
+        List<Compra> nuevacompras  = compra.getBoleta().getCompras();
+        for (Compra compras : nuevacompras) {
+            System.out.println("Número de Compra: " + compras.getNumero_compra());
+            System.out.println("Cantidad de Producto: " + compras.getCantidad_producto());
+            System.out.println("Código de Producto Compra: " + compras.getCodigo_producto_compra());
+            // Agrega más información según sea necesario
+            System.out.println("-------------"); // Separador entre compras
         }
-    }
+    }*/
 
-    // Otros métodos
-}
+

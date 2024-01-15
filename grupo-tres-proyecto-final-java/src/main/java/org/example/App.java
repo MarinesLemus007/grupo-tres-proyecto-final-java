@@ -193,9 +193,7 @@ public class App
                             System.out.println("---------------------------\n");
                         }
 
-                        // Crear Boleta para el usuario
-                        Boleta newBoleta = new Boleta();
-                        boletaDAO.insert(newBoleta);
+
 
                         //
 
@@ -220,13 +218,25 @@ public class App
                                             newCompra.getProductos().add(productoAgregado);
 
                                             // Asociar Compra con Boleta
+                                            // Crear Boleta para el usuario
+                                            Boleta newBoleta = new Boleta();
+                                            boletaDAO.insert(newBoleta);
                                             Boleta foundBoleta = boletaDAO.findById(newBoleta.getId());
-                                            /*newCompra.setBoleta(foundBoleta);
-                                            foundBoleta.getCompras().add(newCompra);*/
-                                            foundBoleta.agregarCompra(newCompra);
+                                            newCompra.setBoleta(foundBoleta);
+                                            foundBoleta.getCompras().add(newCompra);
+
+                                            //newBoleta.setCompras(newCompra.);
+                                            //newBoleta.setCodigo_producto(newBoleta.getCompras().get(0).getCodigo_producto_compra());
+                                            //newBoleta.setCantidad_producto(newBoleta.getCompras().get(0).getCantidad_producto());
+                                            //newBoleta.setEsta_pagada(newBoleta.getCompras().get(0).isEsta_pagada());
+                                            //newBoleta.getTotal_compra(newCompra.totalCompra());
+                                            //foundBoleta.setUsuario().add(newCompra.getDni_comprador());
+                                            //foundBoleta.setUsuario_dni_usuario(newCompra.getDni_comprador());
+
+                                            //foundBoleta.agregarCompra(newCompra);
 
                                             compraDAO.insert(newCompra);
-                                            boletaDAO.update(foundBoleta);
+                                            //boletaDAO.update(foundBoleta);
                                             Compra foundCompra = compraDAO.findById(newCompra.getNumero_compra());
 
 
@@ -268,6 +278,8 @@ public class App
 
                         break;
                     case 2:
+                        //Boleta newBoleta = new Boleta();
+                        //newBoleta.getCompras().get(0).getDni_comprador(dni_usuario_role);
                         mensaje = "Ver Boleta";
                         /*Usuario usuario = usuarioDAO.findById(dni_usuario_role);
                         usuario.generarInfoBoletas();*/
