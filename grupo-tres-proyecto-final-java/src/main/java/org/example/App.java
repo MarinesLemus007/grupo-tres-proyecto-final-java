@@ -35,6 +35,7 @@ public class App
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         CompraDAO compraDAO = new CompraDAO();
         ProductoDAO productoDAO = new ProductoDAO();
+        BoletaDAO boletaDAO = new BoletaDAO();
 
         do {
             //Menú inicial, Crear Usuario o entrar con usuario ya existente
@@ -192,6 +193,12 @@ public class App
                             System.out.println("---------------------------\n");
                         }
 
+                        // Crear Boleta para el usuario
+                        Boleta newBoleta = new Boleta();
+                        boletaDAO.insert(newBoleta);
+
+                        //
+
                         do {
                             System.out.println("Por favor, escribe el código del producto \n");
                             try {
@@ -211,7 +218,15 @@ public class App
                                             newCompra.totalCompra();
                                             Producto productoAgregado = productoDAO.findById(codigo_producto_compra);
                                             newCompra.getProductos().add(productoAgregado);
+
+                                            // Asociar Compra con Boleta
+                                            Boleta foundBoleta = boletaDAO.findById(newBoleta.getId());
+                                            /*newCompra.setBoleta(foundBoleta);
+                                            foundBoleta.getCompras().add(newCompra);*/
+                                            foundBoleta.agregarCompra(newCompra);
+
                                             compraDAO.insert(newCompra);
+                                            boletaDAO.update(foundBoleta);
                                             Compra foundCompra = compraDAO.findById(newCompra.getNumero_compra());
 
 
@@ -253,7 +268,9 @@ public class App
 
                         break;
                     case 2:
-                        mensaje = "Ver Boletas";
+                        mensaje = "Ver Boleta";
+                        /*Usuario usuario = usuarioDAO.findById(dni_usuario_role);
+                        usuario.generarInfoBoletas();*/
                         break;
                     case 3:
                         mensaje = "Ver Saldo";

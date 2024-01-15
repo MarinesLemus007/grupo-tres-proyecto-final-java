@@ -30,7 +30,7 @@ public class Compra {
     private List<Producto> productos = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn (name = "codigo_producto")
+    @JoinColumn (name = "id_boleta")
     private Boleta boleta;
 
     //Constructores.

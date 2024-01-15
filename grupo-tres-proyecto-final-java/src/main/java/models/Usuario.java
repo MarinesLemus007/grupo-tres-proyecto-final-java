@@ -45,4 +45,15 @@ public class Usuario {
     public void setBoletas(List<Boleta> boletas) { this.boletas = boletas; }
 
     //Metodos.
+    /*public List<String> generarInfoBoletas() {
+        List<String> infoBoletas = new ArrayList<>();
+
+        for (Boleta boleta : boletas) {
+            List<String> infoConsolidada = boleta.obtenerInfoCompraConsolidada();
+            infoBoletas.addAll(infoConsolidada);
+        }
+
+        return infoBoletas;
+    }*/
+
 }

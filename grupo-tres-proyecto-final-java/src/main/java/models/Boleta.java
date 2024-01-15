@@ -3,22 +3,23 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-@Entity
+/*@Entity
 public class Boleta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
-    @OneToMany( mappedBy = "boleta")
+    @OneToMany(mappedBy = "boleta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Compra> compras = new ArrayList<>();
 
     @ManyToOne
     private Usuario usuario;
 
     // Atributos de info_compra
-    private long codigo_producto;
+    private long codigo_producto, dni_usuario;
     private int cantidad_producto;
     private BigDecimal total_compra;
     private boolean esta_pagada;
@@ -36,6 +37,7 @@ public class Boleta {
     public BigDecimal getTotal_compra() { return total_compra; }
     public boolean isEsta_pagada() { return esta_pagada;}
     //public List<String> getInfo_compra() { return info_compra; }
+    public long getDni_usuario() { return dni_usuario; }
 
     //Setters.
     public void setId(long id) { this.id = id; }
@@ -46,6 +48,7 @@ public class Boleta {
     public void setTotal_compra(BigDecimal total_compra) { this.total_compra = total_compra; }
     public void setEsta_pagada(boolean esta_pagada) { this.esta_pagada = esta_pagada; }
     //public void setInfo_compra(List<String> info_compra) { this.info_compra = info_compra; }
+    public void setDni_usuario(long dni_usuario) { this.dni_usuario = dni_usuario; }
 
     //Metodos.
 
@@ -62,4 +65,65 @@ public class Boleta {
         }
         return infoConsolidada;
     }
+}*/
+
+@Entity
+public class Boleta {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
+    private long id;
+
+    @OneToMany(mappedBy = "boleta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Compra> compras = new ArrayList<>();
+
+    /*@ManyToOne
+    private Usuario usuario;*/
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_dni_usuario")
+    private Usuario usuario;
+
+    // Otros atributos y métodos
+
+    public Boleta() {}
+
+    // Getters y setters
+
+
+    public long getId() {
+        return id;
+    }
+
+    public List<Compra> getCompras() {
+        return compras;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setCompras(List<Compra> compras) {
+        this.compras = compras;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    // Método para agregar una compra a la boleta
+    public void agregarCompra(Compra compra) {
+        compras.add(compra);
+        compra.setBoleta(this);
+
+        for (String s : Arrays.asList("Compra agregada a Boleta: " + compra.getBoleta().getCompras(), "Productos en la compra: " + compra.getProductos().size())) {
+            System.out.println(s);
+        }
+    }
+
+    // Otros métodos
 }
