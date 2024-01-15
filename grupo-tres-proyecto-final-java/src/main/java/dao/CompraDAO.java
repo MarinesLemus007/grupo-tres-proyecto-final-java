@@ -80,7 +80,7 @@ public class CompraDAO {
         }
     }
 
-    /*public void addPagoToCompra(int numero_compra, Pagos pagos){
+    public void addPagoToCompra(int numero_compra){
         Transaction transaction = null;
         try (Session session= HibernateUtil.getSessionFactory().openSession()){
             transaction = session.beginTransaction();
@@ -97,5 +97,7 @@ public class CompraDAO {
             }
             ex.printStackTrace();
         }
-    }*/
+    }
+
+
 }

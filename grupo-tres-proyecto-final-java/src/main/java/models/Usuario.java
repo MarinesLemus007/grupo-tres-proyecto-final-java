@@ -16,9 +16,6 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<Boleta> boletas = new ArrayList<>();
 
-    //@OneToMany(mappedBy = "compras")
-    //private List<Usuario> usuarios = new ArrayList<>();
-
 
     //Atributos.
     private String nombre_usuario;

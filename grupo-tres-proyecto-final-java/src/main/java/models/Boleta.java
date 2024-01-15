@@ -27,7 +27,7 @@ public class Boleta {
         this.usuario = usuario; }
 
         //Getters
-         public String getInformacion_compra() { return informacion_compra; }
+        public String getInformacion_compra() { return informacion_compra; }
         public List<Compra> getCompra() { return compras; }
         public Usuario getUsuario() { return usuario; }
 
