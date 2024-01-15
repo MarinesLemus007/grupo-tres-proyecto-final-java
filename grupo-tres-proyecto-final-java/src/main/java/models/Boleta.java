@@ -13,15 +13,11 @@ public class Boleta {
     @GenericGenerator(name = "native", strategy = "native")
     private int numero_compra;
 
-
     private String informacion_compra;
     @OneToMany( mappedBy = "boleta")
     private List<Compra> compras = new ArrayList<>();
     @ManyToOne
     private Usuario usuario;
-
-    private List<Boleta> boletas = new ArrayList<>();
-
 
     //Constructores.
     public Boleta() { }
@@ -30,15 +26,15 @@ public class Boleta {
         this.informacion_compra = informacion_compra;
         this.usuario = usuario; }
 
-    //Getters
-    public String getInformacion_compra() { return informacion_compra; }
-    public List<Compra> getCompra() { return compras; }
-    public Usuario getUsuario() { return usuario; }
+        //Getters
+         public String getInformacion_compra() { return informacion_compra; }
+        public List<Compra> getCompra() { return compras; }
+        public Usuario getUsuario() { return usuario; }
 
-    //Setters.
-    public void setInformacion_compra(String informacion_compra) { this.informacion_compra = informacion_compra; }
-    public void addCompra(Compra compra) { this.compras.add(compra); }
-    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+        //Setters.
+        public void setInformacion_compra(String informacion_compra) { this.informacion_compra = informacion_compra; }
+        public void addCompra(Compra compra) { this.compras.add(compra); }
+        public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+    }
 
 
-}

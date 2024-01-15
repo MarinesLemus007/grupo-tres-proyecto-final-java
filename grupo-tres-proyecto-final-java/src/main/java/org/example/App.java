@@ -16,7 +16,6 @@ public class App
     static CompraDAO compraDAO = new CompraDAO();
     static BoletaDAO boletaDAO = new BoletaDAO();
     static ProductoDAO productoDAO = new ProductoDAO();
-    static PagosDAO pagosDAO = new PagosDAO();
 
     public static void main( String[] args )
     {
@@ -31,14 +30,14 @@ public class App
 
         //Crear Producto
         ProductoDAO productoDAO = new ProductoDAO();
-        Producto newProducto = new Producto("Silla Gamer", 250000, "Silla gamer ergonómica color amarillo");
+        Producto newProducto = new Producto("Silla escritorio", 20000, "Silla gamer ergonómica color amarillo");
         productoDAO.insert(newProducto);
         Producto foundProducto = productoDAO.findById(newProducto.getCodigo_producto());
         System.out.println("foundProducto = " + foundProducto);
 
         //Crear Compra
         CompraDAO compraDAO = new CompraDAO();
-        Compra newCompra = new Compra(1, 2, true, 250000);
+        Compra newCompra = new Compra(1, 2, true, 260000);
         compraDAO.insert(newCompra);
         Compra foundCompra = compraDAO.findById(newCompra.getNumero_compra());
         System.out.println("foundCompra = " + foundCompra);

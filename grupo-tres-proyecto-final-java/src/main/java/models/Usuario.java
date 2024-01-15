@@ -1,6 +1,7 @@
 package models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +10,14 @@ import java.util.Map;
 @Entity
 public class Usuario {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private long dni_usuario;
     @OneToMany(mappedBy = "usuario")
     private List<Boleta> boletas = new ArrayList<>();
 
     //@OneToMany(mappedBy = "compras")
-    private List<Usuario> usuarios = new ArrayList<>();
+    //private List<Usuario> usuarios = new ArrayList<>();
 
 
     //Atributos.
@@ -29,7 +32,7 @@ public class Usuario {
     }
 
     public Usuario(long dni_usuario, String nombre_usuario, String direccion_usuario, String email_usuario, String role) {
-        this.dni_usuario = dni_usuario;
+        this.dni_usuario = (int) dni_usuario;
         this.nombre_usuario = nombre_usuario;
         this.direccion_usuario = direccion_usuario;
         this.email_usuario = email_usuario;

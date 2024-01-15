@@ -1,7 +1,6 @@
 package dao;
 
 import models.Compra;
-import models.Pagos;
 import org.example.until.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -81,7 +80,7 @@ public class CompraDAO {
         }
     }
 
-    public void addPagoToCompra(int numero_compra, Pagos pagos){
+    /*public void addPagoToCompra(int numero_compra, Pagos pagos){
         Transaction transaction = null;
         try (Session session= HibernateUtil.getSessionFactory().openSession()){
             transaction = session.beginTransaction();
@@ -98,5 +97,5 @@ public class CompraDAO {
             }
             ex.printStackTrace();
         }
-    }
+    }*/
 }
