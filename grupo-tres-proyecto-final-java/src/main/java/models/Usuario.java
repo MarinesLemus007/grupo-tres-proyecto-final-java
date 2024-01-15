@@ -25,8 +25,7 @@ public class Usuario {
 
 
     //Constructores.
-    public Usuario() {
-    }
+    public Usuario() { }
 
     public Usuario(long dni_usuario, String nombre_usuario, String direccion_usuario, String email_usuario, String role) {
         this.dni_usuario = (int) dni_usuario;

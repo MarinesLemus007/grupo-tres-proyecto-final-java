@@ -90,4 +90,26 @@ public class App
         System.out.println("Historial de pedidos de: " +usuario.getNombre_usuario() +" " +usuario.obtenerBoletas(dni));
     }
 
+    //Al crear el menu, se debe preguntar que tipo de usuario es (admin o cliente),
+    // solo pueden crear productos los admin.
+    public static boolean crearProducto(String respuesta){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Ingrese nombre del producto");
+        String nombreProducto = scanner.next();
+        System.out.println("Ingrese precio del producto");
+        int precioProducto = scanner.nextInt();
+        System.out.println("Ingrese descripcion del producto");
+        String descripcionProducto = scanner.next();
+        Producto producto;
+
+        //depende del numero que se le asigne en el menu, modificar de ser necesario.
+        if (respuesta.equals("1")){
+            producto = new Producto(nombreProducto, precioProducto,descripcionProducto);
+        }else {
+            System.out.println("Usuario no valido para crear productos");
+            producto = new Producto();
+        }
+        productoDAO.insert(producto);
+        return  true;
+    }
 }
