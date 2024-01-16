@@ -14,6 +14,8 @@ public class Usuario {
     private String role;
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Boleta> boletas;
+    @OneToOne(mappedBy = "usuario")
+    private Tarjeta tarjeta;
 
     //Constructores.
     public Usuario() { }
@@ -32,9 +34,8 @@ public class Usuario {
     public String getDireccion_usuario() { return direccion_usuario; }
     public String getEmail_usuario() { return email_usuario; }
     public String getRole() { return role; }
-    public List<Boleta> getBoletas() {
-        return boletas;
-    }
+    public List<Boleta> getBoletas() { return boletas; }
+    public Tarjeta getTarjeta(){return this.tarjeta;}
 
     //Setters.
     public void setDni_usuario(long dni_usuario) { this.dni_usuario = dni_usuario; }
@@ -43,6 +44,7 @@ public class Usuario {
     public void setEmail_usuario(String email_usuario) { this.email_usuario = email_usuario; }
     public void setRole(String role) { this.role = role; }
     public void setBoletas(List<Boleta> boletas) { this.boletas = boletas; }
+    public void setTarjeta(Tarjeta t) { this.tarjeta = tarjeta; }
 
     //Metodos.
     /*public List<String> generarInfoBoletas() {

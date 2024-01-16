@@ -2,14 +2,9 @@ package org.example;
 
 import java.util.*;
 
-import dao.UsuarioDAO;
-import models.Usuario;
-import dao.BoletaDAO;
-import models.Boleta;
-import dao.CompraDAO;
-import models.Compra;
-import dao.ProductoDAO;
-import models.Producto;
+
+import models.*;
+import dao.*;
 
 import javax.persistence.NoResultException;
 import java.math.BigDecimal;
@@ -26,7 +21,7 @@ public class App
         String nombre_usuario_role = "", direccion_usuario_role = "", email_usuario_role = "", mensaje = "", nombre_producto_creacion = "", descripcion_producto_creacion = "";
         long dni_usuario_role = 0, codigo_producto_compra = 0;
         int respuesta_role, opcion_menu_admin, cantidad_producto_compra = 0;
-        BigDecimal precio_producto_creacion;
+        double precio_producto_creacion;
         boolean itera_menu_inicial = false, itera_enrolamiento, itera_menu_admin_crear_producto = true, itera_cod_producto = false, itera_cantidad_compra = false;
         List<Producto> productoExistente;
 
@@ -36,6 +31,10 @@ public class App
         CompraDAO compraDAO = new CompraDAO();
         ProductoDAO productoDAO = new ProductoDAO();
         BoletaDAO boletaDAO = new BoletaDAO();
+        TarjetaDAO tarjetaDAO = new TarjetaDAO();
+
+        /*Usuario usuarioSession;
+        Tarjeta tarjetaUsuario = new Tarjeta();*/
 
         do {
             //Menú inicial, Crear Usuario o entrar con usuario ya existente
@@ -66,10 +65,24 @@ public class App
                             Usuario newUsuario;
                             if (respuesta_role == 1) {
                                 newUsuario = new Usuario(dni_usuario_role, nombre_usuario_role, direccion_usuario_role, email_usuario_role, "admin");
+                                usuarioDAO.insert(newUsuario);
                             } else {
                                 newUsuario = new Usuario(dni_usuario_role, nombre_usuario_role, direccion_usuario_role, email_usuario_role, "cliente");
+                                System.out.println("Para culminar el registro, por favor ingresa los siguientes datos: \n" +
+                                        "Numero de tarjeta : ");
+                                String numCard = scanner.next();
+                                System.out.println("Monto que desee cargar a la tarjeta");
+                                int amount = scanner.nextInt();
+                                System.out.println("Se ha registrado la información de su tarjeta exitosamente");
+
+                                Tarjeta newTarjeta;
+                                newTarjeta = new Tarjeta(numCard,amount,newUsuario);
+                                usuarioDAO.insert(newUsuario);
+                                tarjetaDAO.insert(newTarjeta);
+
                             }
-                            usuarioDAO.insert(newUsuario);
+
+
                             //Ver Usuario Creado
                             Usuario foundUsuario = usuarioDAO.findById(newUsuario.getDni_usuario());
                             System.out.println("\nEl siguiente usuario ha sido creado\n" +
@@ -98,6 +111,9 @@ public class App
                     Usuario usuarioExistente = usuarioDAO.findById(dni_usuario_role);
                     if (usuarioExistente != null) {
                         System.out.println("El usuario existe en el registro.");
+                        if (usuarioExistente.getRole().equals("cliente")){
+                            Tarjeta tarjetaUsuario = tarjetaDAO.findById(usuarioExistente.getTarjeta().getId());
+                        }
                         itera_menu_inicial = false;
                     } else {
                         System.out.println("El usuario no existe en el registro.");
@@ -131,12 +147,12 @@ public class App
                             System.out.println("Ingrese el nombre del producto:");
                             nombre_producto_creacion = scanner.nextLine();
                             System.out.println("Ingrese el precio del producto:");
-                            precio_producto_creacion = scanner.nextBigDecimal();
+                            precio_producto_creacion = scanner.nextDouble();
                             scanner.nextLine();
                             System.out.println("Ingrese la descripción del producto:");
                             descripcion_producto_creacion = scanner.nextLine();
 
-                            if (nombre_producto_creacion.isEmpty() || precio_producto_creacion.compareTo(BigDecimal.ZERO) == 0 || descripcion_producto_creacion.isEmpty()) {
+                            if (nombre_producto_creacion.isEmpty() || precio_producto_creacion == 0 || descripcion_producto_creacion.isEmpty()) {
                                 System.out.println("Por favor, revise los datos ingresados para la creación del producto\n");
                             } else {
                                 Producto newProducto = new Producto(nombre_producto_creacion, precio_producto_creacion, descripcion_producto_creacion);
@@ -211,7 +227,7 @@ public class App
                             try {
                                 codigo_producto_compra = scanner.nextLong();
                                 productoExistente = productoDAO.findByName(codigo_producto_compra);
-                                BigDecimal precioProducto = productoExistente.getFirst().getPrecio_producto();
+                                double precioProducto = productoExistente.getFirst().getPrecio_producto();
 
                                 do {
                                     System.out.println("\nIngrese cuantos quiere llevar:");
@@ -222,7 +238,11 @@ public class App
                                         if (cantidad_producto_compra > 0) {
                                             //Creación de Compra
                                             Compra newCompra = new Compra(dni_usuario_role, codigo_producto_compra, cantidad_producto_compra, true, precioProducto);
-                                            newCompra.totalCompra();
+                                            //newCompra.totalCompra();
+
+                                            Tarjeta t = newCompra.totalCompra(usuarioDAO.findBydni(dni_usuario_role).getTarjeta());
+                                            tarjetaDAO.update(t);
+
                                             Producto productoAgregado = productoDAO.findById(codigo_producto_compra);
                                             newCompra.getProductos().add(productoAgregado);
 

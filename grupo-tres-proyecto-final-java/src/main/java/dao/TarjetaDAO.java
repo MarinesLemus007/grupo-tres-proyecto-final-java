@@ -1,50 +1,37 @@
 package dao;
 
+import models.Boleta;
+import models.Tarjeta;
 import models.Usuario;
-//import org.example.until.HibernateUtil;
 import org.example.until.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
-import java.util.List;
+public class TarjetaDAO {
 
-public class UsuarioDAO {
-
-    public Usuario findById(Long id) {
+    public Tarjeta findById(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(Usuario.class, id);
+            return session.get(Tarjeta.class, id);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public List<Usuario> findAll() {
+    public Tarjeta findByUser(long usuario) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Usuario", Usuario.class).list();
+            return session.get(Tarjeta.class, usuario);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public List<Usuario> findByRole(String role) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Usuario> query = session.createQuery("FROM Usuario WHERE role = :role", Usuario.class);
-            query.setParameter("role", role);
-            return query.list();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    public void insert(Usuario usuario) {
+    public void insert(Tarjeta tarjeta) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.save(usuario);
+            session.save(tarjeta);
             transaction.commit();
         } catch (Exception ex) {
             if (transaction != null) {
@@ -54,11 +41,11 @@ public class UsuarioDAO {
         }
     }
 
-    public void update(Usuario usuario) {
+    public void update(Tarjeta tarjeta) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.update(usuario);
+            session.update(tarjeta);
             transaction.commit();
         } catch (Exception ex) {
             if (transaction != null) {
@@ -68,11 +55,11 @@ public class UsuarioDAO {
         }
     }
 
-    public void delete(Usuario usuario) {
+    public void delete(Tarjeta tarjeta) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.delete(usuario);
+            session.delete(tarjeta);
             transaction.commit();
         } catch (Exception ex) {
             if (transaction != null) {
@@ -81,15 +68,4 @@ public class UsuarioDAO {
             ex.printStackTrace();
         }
     }
-
-    public Usuario findBydni(Long dni) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(Usuario.class, dni);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-
 }
