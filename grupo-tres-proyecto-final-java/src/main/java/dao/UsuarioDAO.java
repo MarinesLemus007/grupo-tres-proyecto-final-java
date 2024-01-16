@@ -19,6 +19,24 @@ public class UsuarioDAO {
         }
     }
 
+    public Usuario findBydni(Long dni) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Usuario.class, dni);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public Usuario findByEmail(String email_usuario) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Usuario.class, email_usuario);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     public List<Usuario> findAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("FROM Usuario", Usuario.class).list();
@@ -52,7 +70,6 @@ public class UsuarioDAO {
             ex.printStackTrace();
         }
     }
-
     public void update(Usuario usuario) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

@@ -10,9 +10,14 @@ import java.util.Scanner;
 @Entity
 public class Usuario {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private long dni_usuario;
     @OneToMany(mappedBy = "usuario")
     private List<Boleta> boletas = new ArrayList<>();
+
+    /*@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Tarjeta tarjeta;*/
 
     //Atributos.
     private String nombre_usuario;
@@ -20,10 +25,12 @@ public class Usuario {
     private String email_usuario;
     private String role;
 
+    @OneToOne(mappedBy = "usuario")
+    private Tarjeta tarjeta;
+
     //Constructores.
     public Usuario() { }
-    public Usuario(long dni_usuario, String nombre_usuario, String direccion_usuario, String email_usuario, String role) {
-        this.dni_usuario = dni_usuario;
+    public Usuario(String nombre_usuario, String direccion_usuario, String email_usuario, String role) {
         this.nombre_usuario = nombre_usuario;
         this.direccion_usuario = direccion_usuario;
         this.email_usuario = email_usuario;
@@ -47,5 +54,20 @@ public class Usuario {
     public void setRole(String role) { this.role = role; }
     public void addBoleta(Boleta boleta) { this.boletas.add(boleta); }
 
+    public List<Boleta> getBoletas() {
+        return boletas;
+    }
+
+    /*public Tarjeta getTarjeta() {
+        return tarjeta;
+    }*/
+
+    public void setBoletas(List<Boleta> boletas) {
+        this.boletas = boletas;
+    }
+
+    /*public void setTarjeta(Tarjeta tarjeta) {
+        this.tarjeta = tarjeta;
+    }*/
 
 }
