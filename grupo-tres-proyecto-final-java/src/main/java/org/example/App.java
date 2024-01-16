@@ -329,6 +329,10 @@ public class App
                         break;
                     case 3:
                         mensaje = "Ver Saldo";
+                        List<Tarjeta> tarjetas = tarjetaDAO.saldo(dni_usuario_role);
+                        for (Tarjeta tarjeta : tarjetas) {
+                            System.out.println("Saldo actual: " + tarjeta.getAmount());
+                        }
                         break;
                     case 4:
                         mensaje = "Hasta Luego";

@@ -6,6 +6,9 @@ import models.Usuario;
 import org.example.until.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import java.util.List;
 
 public class TarjetaDAO {
 
@@ -67,5 +70,20 @@ public class TarjetaDAO {
             }
             ex.printStackTrace();
         }
+    }
+
+    public List<Tarjeta> saldo(long dni_usuario) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Tarjeta> query = session.createQuery("FROM Tarjeta WHERE dni_usuario = :dni_usuario", Tarjeta.class);
+            query.setParameter("dni_usuario", dni_usuario);
+            return query.list();
+        } catch (Exception ex) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            ex.printStackTrace();
+        }
+        return null;
     }
 }
