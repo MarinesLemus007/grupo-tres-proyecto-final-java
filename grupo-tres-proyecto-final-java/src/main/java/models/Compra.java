@@ -33,6 +33,7 @@ public class Compra {
     @JoinColumn (name = "id_boleta")
     private Boleta boleta;
 
+
     //Constructores.
     public Compra() { }
     public Compra(long dni_comprador, long codigo_producto_compra, int cantidad_producto, boolean esta_pagada, BigDecimal total_compra) {
@@ -88,4 +89,6 @@ public class Compra {
         );
 
     }*/
+
+
 }

@@ -1,6 +1,7 @@
 package dao;
 
 import models.Boleta;
+import models.Compra;
 import org.example.until.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -79,4 +80,5 @@ public class BoletaDAO {
             ex.printStackTrace();
         }
     }
+
 }

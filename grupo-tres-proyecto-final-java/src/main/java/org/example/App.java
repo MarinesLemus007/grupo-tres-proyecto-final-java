@@ -154,6 +154,15 @@ public class App
                         break;
                     case 2:
                         mensaje = "Ver Lista de clientes";
+                        List<Usuario> usuarios = usuarioDAO.findByRole("cliente");
+                        System.out.println("\n A continuación, te presentamos una lista de los cientes que tenemos : \n");
+                        for (Usuario usuario : usuarios) {
+                            System.out.println("ID: " + usuario.getNombre_usuario()+"\n");
+                            System.out.println("Nombre: " + usuario.getEmail_usuario()+"\n");
+                            System.out.println("Precio: " + usuario.getDireccion_usuario()+"\n");
+                            System.out.println("---------------------------\n");
+                        }
+
                         break;
                     case 3:
                         mensaje = "Hasta Luego";
@@ -283,6 +292,20 @@ public class App
                         mensaje = "Ver Boleta";
                         /*Usuario usuario = usuarioDAO.findById(dni_usuario_role);
                         usuario.generarInfoBoletas();*/
+                        usuarioDAO = new UsuarioDAO();
+
+                        System.out.println("Historial de pedidos de: \n");
+                        //compraDAO.addCompraToUsuario();
+                        List<Compra> compras = compraDAO.addCompraToUsuario(dni_usuario_role);
+                        for (Compra compra : compras) {
+                            System.out.println("ID: " + compra.getDni_comprador()+"\n");
+                            System.out.println("Boleta: " + compra.getBoleta()+"\n");
+                            System.out.println("Fecha: " + compra.getFecha_compra()+"\n");
+                            System.out.println("Codigo del Producto: " + compra.getCodigo_producto_compra()+"\n");
+                            System.out.println("Cantidad de productos: " + compra.getCantidad_producto()+"\n");
+                            System.out.println("Total: " + compra.getTotal_compra()+"\n");
+                            System.out.println("---------------------------\n");
+                        }
                         break;
                     case 3:
                         mensaje = "Ver Saldo";

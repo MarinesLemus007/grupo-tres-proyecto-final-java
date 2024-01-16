@@ -29,10 +29,10 @@ public class UsuarioDAO {
         }
     }
 
-    public List<Usuario> findByName(String nombre_usuario) {
+    public List<Usuario> findByRole(String role) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Usuario> query = session.createQuery("FROM Usuario WHERE nombre_usuario = :nombre_usuario", Usuario.class);
-            query.setParameter("nombre_usuario", nombre_usuario);
+            Query<Usuario> query = session.createQuery("FROM Usuario WHERE role = :role", Usuario.class);
+            query.setParameter("role", role);
             return query.list();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -81,4 +81,6 @@ public class UsuarioDAO {
             ex.printStackTrace();
         }
     }
+
+
 }

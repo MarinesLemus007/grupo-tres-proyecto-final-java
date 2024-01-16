@@ -79,4 +79,21 @@ public class CompraDAO {
             ex.printStackTrace();
         }
     }
+
+    public List<Compra> addCompraToUsuario(Long dni_comprador){
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query<Compra> query = session.createQuery("FROM Compra WHERE dni_comprador = :dni_comprador", Compra.class);
+            query.setParameter("dni_comprador", dni_comprador);
+            return query.list();
+        }catch (Exception ex){
+            if (transaction != null){
+                transaction.rollback();
+            }
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+
 }
