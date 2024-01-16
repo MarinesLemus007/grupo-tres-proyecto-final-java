@@ -1,9 +1,6 @@
 package org.example.until;
 
-import models.Boleta;
-import models.Compra;
-import models.Producto;
-import models.Usuario;
+import models.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -26,7 +23,7 @@ public class HibernateUtil {
                 //MySQL
                 /*Properties settings = new Properties();
                 settings.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
-                settings.put(Environment.URL, "jdbc:mysql://localhost:3306/multisales?serverTimezone=UTC");
+                settings.put(Environment.URL, "jdbc:mysql://localhost:3306/proyectofinal?serverTimezone=UTC");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
                 settings.put(Environment.USER, "root");
                 settings.put(Environment.PASS, "root");*/
@@ -51,6 +48,8 @@ public class HibernateUtil {
                 configuration.addAnnotatedClass(Compra.class);
                 configuration.addAnnotatedClass(Producto.class);
                 configuration.addAnnotatedClass(Usuario.class);
+                configuration.addAnnotatedClass(Tarjeta.class);
+
                 //Servicio de parametros de conexion
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
