@@ -33,9 +33,6 @@ public class App
         BoletaDAO boletaDAO = new BoletaDAO();
         TarjetaDAO tarjetaDAO = new TarjetaDAO();
 
-        /*Usuario usuarioSession;
-        Tarjeta tarjetaUsuario = new Tarjeta();*/
-
         do {
             //Menú inicial, Crear Usuario o entrar con usuario ya existente
             System.out.println("\nBienvenido a Nuestra Tienda\n" +
@@ -238,8 +235,8 @@ public class App
                                         if (cantidad_producto_compra > 0) {
                                             //Creación de Compra
                                             Compra newCompra = new Compra(dni_usuario_role, codigo_producto_compra, cantidad_producto_compra, true, precioProducto);
-                                            //newCompra.totalCompra();
 
+                                            //Se actualiza saldo de tarjeta y valor de la compra total
                                             Tarjeta t = newCompra.totalCompra(usuarioDAO.findBydni(dni_usuario_role).getTarjeta());
                                             tarjetaDAO.update(t);
 
@@ -250,32 +247,14 @@ public class App
                                             // Crear Boleta para el usuario
                                             Boleta newBoleta = new Boleta();
                                             boletaDAO.insert(newBoleta);
+
                                             Boleta foundBoleta = boletaDAO.findById(newBoleta.getId());
                                             newCompra.setBoleta(foundBoleta);
                                             foundBoleta.getCompras().add(newCompra);
 
-                                            //newBoleta.setCompras(newCompra.);
-                                            //newBoleta.setCodigo_producto(newBoleta.getCompras().get(0).getCodigo_producto_compra());
-                                            //newBoleta.setCantidad_producto(newBoleta.getCompras().get(0).getCantidad_producto());
-                                            //newBoleta.setEsta_pagada(newBoleta.getCompras().get(0).isEsta_pagada());
-                                            //newBoleta.getTotal_compra(newCompra.totalCompra());
-                                            //foundBoleta.setUsuario().add(newCompra.getDni_comprador());
-                                            //foundBoleta.setUsuario_dni_usuario(newCompra.getDni_comprador());
-
-                                            //foundBoleta.agregarCompra(newCompra);
-
                                             compraDAO.insert(newCompra);
                                             //boletaDAO.update(foundBoleta);
                                             Compra foundCompra = compraDAO.findById(newCompra.getNumero_compra());
-
-
-                                            /*String cp1 = String.valueOf(foundCompra.getCantidad_producto());
-                                            String tc1 = String.valueOf(foundCompra.getTotal_compra());
-
-                                            double cp2 = Double.parseDouble(cp1);
-                                            double tc2 = Double.parseDouble(tc1);
-
-                                            double total_compra_realizada = cp2 * tc2;*/
 
                                             System.out.println("\nSe ha creado la siguiente Compra\n" +
                                                     "Número de la compra : " + foundCompra.getNumero_compra() + "\n" +
@@ -307,15 +286,10 @@ public class App
 
                         break;
                     case 2:
-                        //Boleta newBoleta = new Boleta();
-                        //newBoleta.getCompras().get(0).getDni_comprador(dni_usuario_role);
-                        mensaje = "Ver Boleta";
-                        /*Usuario usuario = usuarioDAO.findById(dni_usuario_role);
-                        usuario.generarInfoBoletas();*/
+
                         usuarioDAO = new UsuarioDAO();
 
                         System.out.println("Historial de pedidos de: \n");
-                        //compraDAO.addCompraToUsuario();
                         List<Compra> compras = compraDAO.addCompraToUsuario(dni_usuario_role);
                         for (Compra compra : compras) {
                             System.out.println("ID: " + compra.getDni_comprador()+"\n");
@@ -347,11 +321,5 @@ public class App
 
             scanner.close();
         }
-        //Crear Boleta (no tiene constructor)
-        /*BoletaDAO boletaDAO = new BoletaDAO();
-        Boleta newBoleta = new Boleta();
-        boletaDAO.insert(newBoleta);
-        Boleta foundBoleta = boletaDAO.findById(newBoleta.);
-        System.out.println("foundBoleta = " + foundBoleta);*/
     }
 }
