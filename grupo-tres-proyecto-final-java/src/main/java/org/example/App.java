@@ -57,7 +57,7 @@ public class App
                             } else {
                                 newUsuario = new Usuario(dni_usuario_role, nombre_usuario_role, direccion_usuario_role, email_usuario_role, "cliente");
                                 System.out.println("Para culminar el registro, por favor ingresa los siguientes datos: \n" +
-                                        "Numero de tarjeta : ");
+                                        "Número de tarjeta : ");
                                 String numCard = scanner.next();
                                 System.out.println("Monto que desee cargar a la tarjeta");
                                 int amount = scanner.nextInt();
@@ -155,13 +155,13 @@ public class App
                         }
                         break;
                     case 2:
-                        mensaje = "Ver Lista de clientes";
+
                         List<Usuario> usuarios = usuarioDAO.findByRole("cliente");
                         System.out.println("\n A continuación, te presentamos una lista de los cientes que tenemos : \n");
                         for (Usuario usuario : usuarios) {
-                            System.out.println("ID: " + usuario.getNombre_usuario()+"\n");
-                            System.out.println("Nombre: " + usuario.getEmail_usuario()+"\n");
-                            System.out.println("Precio: " + usuario.getDireccion_usuario()+"\n");
+                            System.out.println("Nombre: " + usuario.getNombre_usuario()+"\n");
+                            System.out.println("Correo: " + usuario.getEmail_usuario()+"\n");
+                            System.out.println("Dirección: " + usuario.getDireccion_usuario()+"\n");
                             System.out.println("---------------------------\n");
                         }
 
@@ -290,7 +290,7 @@ public class App
                     case 3:
                         List<Tarjeta> tarjetas = tarjetaDAO.saldo(dni_usuario_role);
                         for (Tarjeta tarjeta : tarjetas) {
-                            System.out.println("\nSaldo actual: " + tarjeta.getAmount());
+                            System.out.println("\nSaldo actual: $ " + tarjeta.getAmount());
                         }
                         break;
                     case 4:
@@ -305,7 +305,7 @@ public class App
 
                         tarjetaDAO.update(s);
 
-                        System.out.println("\nSu nuevo saldo es de:" + s.getAmount() + " $ \n");
+                        System.out.println("\nSu nuevo saldo es de: $ " + s.getAmount() + "\n");
                         break;
                     case 5:
                         mensaje = "Hasta Luego";
