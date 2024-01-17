@@ -1,18 +1,9 @@
 package org.example;
-
 import java.util.*;
-
-
 import models.*;
 import dao.*;
-
 import javax.persistence.NoResultException;
-import java.math.BigDecimal;
 
-/**
- * Hello world!
- *
- */
 public class App
 {
     public static void main( String[] args )
@@ -76,9 +67,7 @@ public class App
                                 newTarjeta = new Tarjeta(numCard,amount,newUsuario);
                                 usuarioDAO.insert(newUsuario);
                                 tarjetaDAO.insert(newTarjeta);
-
                             }
-
 
                             //Ver Usuario Creado
                             Usuario foundUsuario = usuarioDAO.findById(newUsuario.getDni_usuario());
@@ -215,10 +204,6 @@ public class App
                             System.out.println("Precio: " + producto.getPrecio_producto());
                             System.out.println("---------------------------\n");
                         }
-
-
-
-                        //
 
                         do {
                             System.out.println("Por favor, escribe el código del producto \n");

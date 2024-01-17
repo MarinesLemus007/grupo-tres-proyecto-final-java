@@ -2,7 +2,6 @@ package models;
 import dao.TarjetaDAO;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,8 +19,7 @@ public class Compra {
     private boolean esta_pagada;
     private double total_compra;
     private Date fecha_compra;
-    /*@ManyToMany(cascade = CascadeType.ALL)
-    private List<Producto> productos = new ArrayList<>();*/
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "compra_producto",
@@ -53,7 +51,6 @@ public class Compra {
         this.fecha_compra = new Date();}
 
     //Getters.
-
     public long getNumero_compra() { return numero_compra; }
     public int getCantidad_producto() { return cantidad_producto; }
     public boolean isEsta_pagada() { return esta_pagada; }
@@ -63,8 +60,8 @@ public class Compra {
     public Boleta getBoleta() { return boleta; }
     public long getDni_comprador() { return dni_comprador; }
     public long getCodigo_producto_compra() { return codigo_producto_compra;}
-//Setters.
 
+    //Setters.
     public void setNumero_compra(long numero_compra) { this.numero_compra = numero_compra; }
     public void setCantidad_producto(int cantidad_producto) { this.cantidad_producto = cantidad_producto; }
     public void setEsta_pagada(boolean esta_pagada) { this.esta_pagada = esta_pagada; }
@@ -76,12 +73,6 @@ public class Compra {
     public void setCodigo_producto_compra(long codigo_producto_compra) { this.codigo_producto_compra = codigo_producto_compra; }
 
     //Metodos.
-
-    /*public void totalCompra(){
-        BigDecimal total_compra_realizada = getTotal_compra().multiply(BigDecimal.valueOf(getCantidad_producto()));
-        setTotal_compra(total_compra_realizada);
-    }*/
-
     public Tarjeta totalCompra(Tarjeta tarjetaUsuario){
         double total_compra_realizada = getTotal_compra() * getCantidad_producto();
         setTotal_compra(total_compra_realizada);
@@ -95,15 +86,4 @@ public class Compra {
             return tarjetaUsuario;
         }
     }
-    /*public void verBoletas( long dni_usuario_logeado){
-        System.out.println(
-                "______________________\n" +
-                "COD BOLETA " + getNumero_compra() + "\n" +
-                getCantidad_producto() + " " + getProductos().get(0) + " " + getTotal_compra() + "\n" +
-                        "______________________"
-        );
-
-    }*/
-
-
 }

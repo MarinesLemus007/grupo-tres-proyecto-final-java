@@ -1,7 +1,6 @@
 package models;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.ArrayList;
 @Entity

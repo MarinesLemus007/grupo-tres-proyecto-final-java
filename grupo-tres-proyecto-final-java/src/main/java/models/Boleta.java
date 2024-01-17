@@ -23,7 +23,6 @@ public class Boleta {
     private int cantidad_producto;
     private BigDecimal total_compra;
     private boolean esta_pagada;
-    //List<String> info_compra = new ArrayList<>();
 
     //Constructores.
     public Boleta() {}
@@ -50,7 +49,7 @@ public class Boleta {
     //public void setInfo_compra(List<String> info_compra) { this.info_compra = info_compra; }
     public void setDni_usuario(long dni_usuario) { this.dni_usuario = dni_usuario; }
 
-    //Metodos.
+    //Metodos
 
     public List<String> obtenerInfoCompraConsolidada() {
         List<String> infoConsolidada = new ArrayList<>();
@@ -66,20 +65,3 @@ public class Boleta {
         return infoConsolidada;
     }
 }
-
-
-
-// Método para agregar una compra a la boleta
-    /*public void agregarCompra(Compra compra) {
-        compras.add(compra);
-        compra.setBoleta(this);
-
-        List<Compra> nuevacompras  = compra.getBoleta().getCompras();
-        for (Compra compras : nuevacompras) {
-            System.out.println("Número de Compra: " + compras.getNumero_compra());
-            System.out.println("Cantidad de Producto: " + compras.getCantidad_producto());
-            System.out.println("Código de Producto Compra: " + compras.getCodigo_producto_compra());
-            // Agrega más información según sea necesario
-            System.out.println("-------------"); // Separador entre compras
-        }
-    }*/

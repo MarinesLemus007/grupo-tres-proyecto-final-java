@@ -47,15 +47,4 @@ public class Usuario {
     public void setTarjeta(Tarjeta t) { this.tarjeta = tarjeta; }
 
     //Metodos.
-    /*public List<String> generarInfoBoletas() {
-        List<String> infoBoletas = new ArrayList<>();
-
-        for (Boleta boleta : boletas) {
-            List<String> infoConsolidada = boleta.obtenerInfoCompraConsolidada();
-            infoBoletas.addAll(infoConsolidada);
-        }
-
-        return infoBoletas;
-    }*/
-
 }
