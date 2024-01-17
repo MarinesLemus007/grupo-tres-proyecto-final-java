@@ -21,20 +21,20 @@ public class HibernateUtil {
                 // Propiedades de conexio de Hibernate
 
                 //MySQL
-                Properties settings = new Properties();
+                /*Properties settings = new Properties();
                 settings.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
                 settings.put(Environment.URL, "jdbc:mysql://localhost:3306/proyectofinal?serverTimezone=UTC");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
                 settings.put(Environment.USER, "root");
-                settings.put(Environment.PASS, "root");
+                settings.put(Environment.PASS, "root");*/
 
                 //Postgresql
-                /*Properties settings = new Properties();
+                Properties settings = new Properties();
                 settings.put(Environment.DRIVER, "org.postgresql.Driver");
                 settings.put(Environment.URL, "jdbc:postgresql://localhost:5432/proyecto_final");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
                 settings.put(Environment.USER, "marineslemus");
-                settings.put(Environment.PASS, "postgres");*/
+                settings.put(Environment.PASS, "postgres");
 
                 settings.put(Environment.SHOW_SQL, "false");
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");

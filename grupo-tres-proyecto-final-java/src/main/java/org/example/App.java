@@ -58,7 +58,7 @@ public class App
                                 System.out.println("Para culminar el registro, por favor ingresa los siguientes datos: \n" +
                                         "Número de tarjeta : ");
                                 String numCard = scanner.next();
-                                System.out.println("Monto que desee cargar a la tarjeta");
+                                System.out.println("Monto que desee cargar a la tarjeta :");
                                 int amount = scanner.nextInt();
                                 System.out.println("Se ha registrado la información de su tarjeta exitosamente");
 
@@ -197,7 +197,7 @@ public class App
                         //Productos en base de datos
                         do {
                             List<Producto> productos = productoDAO.findAll();
-                            System.out.println("\n A continuación, te presentamos una lista de los productos que tenemos en catálogo : \n");
+                            System.out.println("\nA continuación, te presentamos una lista de los productos que tenemos en catálogo : \n");
                             for (Producto producto : productos) {
                                 System.out.println("ID: " + producto.getCodigo_producto());
                                 System.out.println("Nombre: " + producto.getNombre_producto());
@@ -248,8 +248,10 @@ public class App
                                                         "Cantidad : " + foundCompra.getCantidad_producto() + "\n" +
                                                         "Total : " + foundCompra.getTotal_compra());
 
-                                                System.out.println("1.Opcion para volver a realizar una compra");
-                                                System.out.println("2.Salir");
+                                                //Consulta a cliente si desea realizar una nueva compra
+                                                System.out.println("\n¿Desea realizar otra compra?\n" +
+                                                                    "1. Sí \n"+
+                                                                    "2. No");
                                                 bucleCompra = scanner.nextInt();
 
                                                 itera_cantidad_compra = false;
@@ -271,7 +273,8 @@ public class App
                                     scanner.nextLine();
                                     itera_cod_producto = true;
                                 }
-                        }while(bucleCompra == 1);
+
+                            }while(bucleCompra == 1);
 
                     }while (itera_cod_producto);
 
@@ -299,7 +302,7 @@ public class App
                         }
                         break;
                     case 4:
-                        System.out.println("Por favor, ingrese el monto a abonar en su tarjeta\n");
+                        System.out.println("Por favor, ingrese el monto a abonar en su tarjeta.");
                         int monto_abonar_tarjeta = 0, monto_actual_tarjeta = 0, suma_total_tarjeta = 0;
                         monto_abonar_tarjeta = scanner.nextInt();
 
