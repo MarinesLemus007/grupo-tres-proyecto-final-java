@@ -2,7 +2,6 @@ package org.example;
 import java.util.*;
 import models.*;
 import dao.*;
-import javax.persistence.NoResultException;
 
 public class App
 {
@@ -11,7 +10,7 @@ public class App
 
         String nombre_usuario_role = "", direccion_usuario_role = "", email_usuario_role = "", mensaje = "", nombre_producto_creacion = "", descripcion_producto_creacion = "";
         long dni_usuario_role = 0, codigo_producto_compra = 0;
-        int respuesta_role, opcion_menu_admin, cantidad_producto_compra = 0;
+        int respuesta_role, opcion_menu_admin, cantidad_producto_compra = 0, bucleCompra = 0;
         double precio_producto_creacion;
         boolean itera_menu_inicial = false, itera_enrolamiento, itera_menu_admin_crear_producto = true, itera_cod_producto = false, itera_cantidad_compra = false;
         List<Producto> productoExistente;
@@ -196,79 +195,85 @@ public class App
                     case 1:
                         //Comprar Productos
                         //Productos en base de datos
-                        List<Producto> productos = productoDAO.findAll();
-                        System.out.println("\n A continuación, te presentamos una lista de los productos que tenemos en catálogo : \n");
-                        for (Producto producto : productos) {
-                            System.out.println("ID: " + producto.getCodigo_producto());
-                            System.out.println("Nombre: " + producto.getNombre_producto());
-                            System.out.println("Precio: " + producto.getPrecio_producto());
-                            System.out.println("---------------------------\n");
-                        }
-
                         do {
-                            System.out.println("Por favor, escribe el código del producto \n");
-                            try {
-                                codigo_producto_compra = scanner.nextLong();
-                                productoExistente = productoDAO.findByName(codigo_producto_compra);
-                                double precioProducto = productoExistente.getFirst().getPrecio_producto();
-
-                                do {
-                                    System.out.println("\nIngrese cuantos quiere llevar:");
-                                    try {
-                                        cantidad_producto_compra = scanner.nextInt();
-                                        scanner.nextLine();
-
-                                        if (cantidad_producto_compra > 0) {
-                                            //Creación de Compra
-                                            Compra newCompra = new Compra(dni_usuario_role, codigo_producto_compra, cantidad_producto_compra, true, precioProducto);
-
-                                            //Se actualiza saldo de tarjeta y valor de la compra total
-                                            Tarjeta t = newCompra.totalCompra(usuarioDAO.findBydni(dni_usuario_role).getTarjeta());
-                                            tarjetaDAO.update(t);
-
-                                            Producto productoAgregado = productoDAO.findById(codigo_producto_compra);
-                                            newCompra.getProductos().add(productoAgregado);
-
-                                            // Asociar Compra con Boleta
-                                            // Crear Boleta para el usuario
-                                            Boleta newBoleta = new Boleta();
-                                            boletaDAO.insert(newBoleta);
-
-                                            Boleta foundBoleta = boletaDAO.findById(newBoleta.getId());
-                                            newCompra.setBoleta(foundBoleta);
-                                            foundBoleta.getCompras().add(newCompra);
-
-                                            compraDAO.insert(newCompra);
-                                            //boletaDAO.update(foundBoleta);
-                                            Compra foundCompra = compraDAO.findById(newCompra.getNumero_compra());
-
-                                            System.out.println("\nSe ha creado la siguiente Compra\n" +
-                                                    "Número de la compra : " + foundCompra.getNumero_compra() + "\n" +
-                                                    "Código de Producto : " + foundCompra.getCodigo_producto_compra() + "\n" +
-                                                    "Cantidad : " + foundCompra.getCantidad_producto() + "\n" +
-                                                    "Total : " + foundCompra.getTotal_compra());
-
-                                            itera_cantidad_compra = false;
-                                            itera_cod_producto = false;
-                                        } else {
-                                            System.out.println("\nLa cantidad ingresada no es válida. inténtelo nuevamente\n");
-                                            itera_cantidad_compra = true;
-                                        }
-                                    }catch (InputMismatchException e){
-                                        System.out.println("\nPor favor, ingrese un número entero mayor a cero\n");
-                                        scanner.nextLine();
-                                        itera_cantidad_compra = true;
-                                    }
-
-                                }while(itera_cantidad_compra);
-
-                            }catch (NoSuchElementException e){
-                                System.out.println("\nEl código de producto ingresado no existe, inténtelo nuevamente\n");
-                                scanner.nextLine();
-                                itera_cod_producto = true;
+                            List<Producto> productos = productoDAO.findAll();
+                            System.out.println("\n A continuación, te presentamos una lista de los productos que tenemos en catálogo : \n");
+                            for (Producto producto : productos) {
+                                System.out.println("ID: " + producto.getCodigo_producto());
+                                System.out.println("Nombre: " + producto.getNombre_producto());
+                                System.out.println("Precio: " + producto.getPrecio_producto());
+                                System.out.println("---------------------------\n");
                             }
 
-                        }while (itera_cod_producto);
+                            do {
+                                System.out.println("Por favor, escribe el código del producto \n");
+                                try {
+                                    codigo_producto_compra = scanner.nextLong();
+                                    productoExistente = productoDAO.findByName(codigo_producto_compra);
+                                    double precioProducto = productoExistente.getFirst().getPrecio_producto();
+
+                                    do {
+                                        System.out.println("\nIngrese cuantos quiere llevar:");
+                                        try {
+                                            cantidad_producto_compra = scanner.nextInt();
+                                            scanner.nextLine();
+
+                                            if (cantidad_producto_compra > 0) {
+                                                //Creación de Compra
+                                                Compra newCompra = new Compra(dni_usuario_role, codigo_producto_compra, cantidad_producto_compra, true, precioProducto);
+
+                                                //Se actualiza saldo de tarjeta y valor de la compra total
+                                                Tarjeta t = newCompra.totalCompra(usuarioDAO.findBydni(dni_usuario_role).getTarjeta());
+                                                tarjetaDAO.update(t);
+
+                                                Producto productoAgregado = productoDAO.findById(codigo_producto_compra);
+                                                newCompra.getProductos().add(productoAgregado);
+
+                                                // Asociar Compra con Boleta
+                                                // Crear Boleta para el usuario
+                                                Boleta newBoleta = new Boleta();
+                                                boletaDAO.insert(newBoleta);
+
+                                                Boleta foundBoleta = boletaDAO.findById(newBoleta.getId());
+                                                newCompra.setBoleta(foundBoleta);
+                                                foundBoleta.getCompras().add(newCompra);
+
+                                                compraDAO.insert(newCompra);
+                                                //boletaDAO.update(foundBoleta);
+                                                Compra foundCompra = compraDAO.findById(newCompra.getNumero_compra());
+
+                                                System.out.println("\nSe ha creado la siguiente Compra\n" +
+                                                        "Número de la compra : " + foundCompra.getNumero_compra() + "\n" +
+                                                        "Código de Producto : " + foundCompra.getCodigo_producto_compra() + "\n" +
+                                                        "Cantidad : " + foundCompra.getCantidad_producto() + "\n" +
+                                                        "Total : " + foundCompra.getTotal_compra());
+
+                                                System.out.println("1.Opcion para volver a realizar una compra");
+                                                System.out.println("2.Salir");
+                                                bucleCompra = scanner.nextInt();
+
+                                                itera_cantidad_compra = false;
+                                                itera_cod_producto = false;
+                                            } else {
+                                                System.out.println("\nLa cantidad ingresada no es válida. inténtelo nuevamente\n");
+                                                itera_cantidad_compra = true;
+                                            }
+                                        } catch (InputMismatchException e) {
+                                            System.out.println("\nPor favor, ingrese un número entero mayor a cero\n");
+                                            scanner.nextLine();
+                                            itera_cantidad_compra = true;
+                                        }
+
+                                    } while (itera_cantidad_compra);
+
+                                } catch (NoSuchElementException e) {
+                                    System.out.println("\nEl código de producto ingresado no existe, inténtelo nuevamente\n");
+                                    scanner.nextLine();
+                                    itera_cod_producto = true;
+                                }
+                        }while(bucleCompra == 1);
+
+                    }while (itera_cod_producto);
 
                         break;
                     case 2:
