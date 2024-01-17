@@ -198,7 +198,8 @@ public class App
                         "1. Realizar Compra\n" +
                         "2. Ver Boletas\n" +
                         "3. Ver Saldo\n" +
-                        "4. Salir");
+                        "4. Abonar Saldo\n" +
+                        "5. Salir");
                 int opcion_menu_cliente = scanner.nextInt();
                 scanner.nextLine();
 
@@ -302,13 +303,26 @@ public class App
                         }
                         break;
                     case 3:
-                        mensaje = "Ver Saldo";
                         List<Tarjeta> tarjetas = tarjetaDAO.saldo(dni_usuario_role);
                         for (Tarjeta tarjeta : tarjetas) {
-                            System.out.println("Saldo actual: " + tarjeta.getAmount());
+                            System.out.println("\nSaldo actual: " + tarjeta.getAmount());
                         }
                         break;
                     case 4:
+                        System.out.println("Por favor, ingrese el monto a abonar en su tarjeta\n");
+                        int monto_abonar_tarjeta = 0, monto_actual_tarjeta = 0, suma_total_tarjeta = 0;
+                        monto_abonar_tarjeta = scanner.nextInt();
+
+                        Tarjeta s = usuarioDAO.findBydni(dni_usuario_role).getTarjeta();
+                        monto_actual_tarjeta = s.getAmount();
+                        suma_total_tarjeta = monto_abonar_tarjeta + monto_actual_tarjeta;
+                        s.setAmount(suma_total_tarjeta);
+
+                        tarjetaDAO.update(s);
+
+                        System.out.println("\nSu nuevo saldo es de:" + s.getAmount() + " $ \n");
+                        break;
+                    case 5:
                         mensaje = "Hasta Luego";
                         break;
                     default:
