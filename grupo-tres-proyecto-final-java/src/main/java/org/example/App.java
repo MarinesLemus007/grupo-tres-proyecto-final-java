@@ -181,8 +181,8 @@ public class App
             //Si es cliente
 
             do {
-                System.out.println("\nBienvenido a Nuestra Tienda\n" +
-                        "seleccione la opción que desee realizar : \n" +
+                System.out.println("Bienvenido a Nuestra Tienda\n" +
+                        "seleccione la opción que desee realizar :\n" +
                         "1. Realizar Compra\n" +
                         "2. Ver Boletas\n" +
                         "3. Ver Saldo\n" +
@@ -201,7 +201,7 @@ public class App
                             for (Producto producto : productos) {
                                 System.out.println("ID: " + producto.getCodigo_producto());
                                 System.out.println("Nombre: " + producto.getNombre_producto());
-                                System.out.println("Precio: " + producto.getPrecio_producto());
+                                System.out.println("Precio: $ " + producto.getPrecio_producto());
                                 System.out.println("---------------------------\n");
                             }
 
@@ -239,7 +239,12 @@ public class App
                                                 foundBoleta.getCompras().add(newCompra);
 
                                                 compraDAO.insert(newCompra);
-                                                //boletaDAO.update(foundBoleta);
+
+                                                //Asociación de boleta con usuario
+                                                Usuario usuarioComprador = usuarioDAO.findById(dni_usuario_role);
+                                                newBoleta.setUsuario(usuarioComprador);
+                                                boletaDAO.update(newBoleta, usuarioComprador);
+
                                                 Compra foundCompra = compraDAO.findById(newCompra.getNumero_compra());
 
                                                 System.out.println("\nSe ha creado la siguiente Compra\n" +
@@ -287,9 +292,9 @@ public class App
                         List<Compra> compras = compraDAO.addCompraToUsuario(dni_usuario_role);
                         for (Compra compra : compras) {
                             System.out.println("ID: " + compra.getDni_comprador()+"\n");
-                            System.out.println("Boleta: " + compra.getBoleta()+"\n");
+                            System.out.println("Boleta: " + compra.getBoleta().getId() +"\n");
                             System.out.println("Fecha: " + compra.getFecha_compra()+"\n");
-                            System.out.println("Codigo del Producto: " + compra.getCodigo_producto_compra()+"\n");
+                            System.out.println("Código del Producto: " + compra.getCodigo_producto_compra()+"\n");
                             System.out.println("Cantidad de productos: " + compra.getCantidad_producto()+"\n");
                             System.out.println("Total: " + compra.getTotal_compra()+"\n");
                             System.out.println("---------------------------\n");
