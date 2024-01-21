@@ -24,7 +24,7 @@ public class Carrito {
         compras = getArregloCarrito();
 
         for (Compra compra : compras) {
-            System.out.println("Haz Agregado al carrito el siguiente producto:\n" +
+            System.out.println(
                     "Cantidad: " + compra.getCantidad_producto() + "\n" +
                     "Código de producto: " + compra.getCodigo_producto_compra()
             );

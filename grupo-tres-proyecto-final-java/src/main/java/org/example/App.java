@@ -196,15 +196,15 @@ public class App
                     case 1:
                         //Comprar Productos
                         Compra newCompra = null;
+
                         while (bucleCompra == 1){
                             //Productos en base de datos
                             List<Producto> productos = productoDAO.findAll();
                             System.out.println("A continuación, te presentamos una lista de los productos que tenemos en catálogo : \n");
                             for (Producto producto : productos) {
-                                System.out.println(
-                                        "ID: " + producto.getCodigo_producto() + ", " +
-                                                "Nombre: " + producto.getNombre_producto() + ", " +
-                                                "Precio: $ " + producto.getPrecio_producto());
+                                System.out.println("ID: " + producto.getCodigo_producto() + ", " +
+                                        "Nombre: " + producto.getNombre_producto() + ", " +
+                                        "Precio: $ " + producto.getPrecio_producto());
                             }
 
                             System.out.println("\nPor favor, escribe el código del producto");
@@ -234,43 +234,47 @@ public class App
                             bucleCompra = scanner.nextInt();
                         }
 
-                        //Se actualiza saldo de tarjeta y valor de la compra total
-                        Tarjeta t = newCompra.totalCompra(usuarioDAO.findBydni(dni_usuario_role).getTarjeta());
-                        tarjetaDAO.update(t);
-
-                        Producto productoAgregado = productoDAO.findById(codigo_producto_compra);
-                        newCompra.getProductos().add(productoAgregado);
-
                         // Asociar Compra con Boleta
                         // Crear Boleta para el usuario
                         Boleta newBoleta = new Boleta();
                         boletaDAO.insert(newBoleta);
 
+                        //Asociar el número de boleta a todas las compras
                         Boleta foundBoleta = boletaDAO.findById(newBoleta.getId());
-                        newCompra.setBoleta(foundBoleta);
-                        foundBoleta.getCompras().add(newCompra);
 
-                        compraDAO.insert(newCompra);
+                        ArrayList<Compra> comprasEnCarrito  = newCarrito.getArregloCarrito();
+
+                        for (Compra compra : comprasEnCarrito ) {
+                           compra.setBoleta(foundBoleta);
+                        }
+                        foundBoleta.getCompras().addAll(comprasEnCarrito);
+
+                        for(Compra compra : comprasEnCarrito){
+                            //Se actualiza saldo de tarjeta y valor de la compra total
+                            Tarjeta t = compra.totalCompra(usuarioDAO.findBydni(dni_usuario_role).getTarjeta());
+                            tarjetaDAO.update(t);
+
+                            //Asociación compra-producto
+                            Producto productoAgregado = productoDAO.findById(compra.getCodigo_producto_compra());
+                            compra.getProductos().add(productoAgregado);
+
+                            compraDAO.insert(compra);
+                        }
 
                         //Asociación de boleta con usuario
                         Usuario usuarioComprador = usuarioDAO.findById(dni_usuario_role);
-                        //foundBoleta.setUsuario(usuarioComprador);
                         boletaDAO.update(newBoleta, usuarioComprador);
 
-                        //Traer Compra por número de boleta
-                        //Compra compraUsuario = compraDAO.findByNumBoleta(newBoleta.getId());
-
-                        Compra foundCompra = compraDAO.findById(newCompra.getNumero_compra());
-                        Producto foundProducto = productoDAO.findById(codigo_producto_compra);
-
-                        System.out.println(
-                            "Se ha creado la siguiente Compra\n" +
-                            "Boleta Número: " + foundCompra.getBoleta().getId() + "\n" +
-                            "Código Producto: " + foundCompra.getCodigo_producto_compra() + "\n" +
-                            "Nombre: " + foundProducto.getNombre_producto() + "\n" +
-                            "Cantidad : " + foundCompra.getCantidad_producto() + "\n" +
-                            "Total : " + foundCompra.getTotal_compra()
-                        );
+                        //Ver compras asociadas a boleta
+                        System.out.println("\nNúmero de boleta " + foundBoleta.getId() + " :");
+                        for (Compra compra : foundBoleta.getCompras()) {
+                            Producto foundProducto = productoDAO.findById(compra.getCodigo_producto_compra());
+                            System.out.println("Código Producto: " + compra.getCodigo_producto_compra() + ", " +
+                                    "Nombre: " + foundProducto.getNombre_producto() + ", " +
+                                    "Cantidad : " + compra.getCantidad_producto() + ", " +
+                                    "Precio : " + compra.getTotal_compra() + ","
+                            );
+                        }
 
                         break;
                     case 2:
