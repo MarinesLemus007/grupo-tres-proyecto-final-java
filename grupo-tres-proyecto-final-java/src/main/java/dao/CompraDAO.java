@@ -18,6 +18,15 @@ public class CompraDAO {
         }
     }
 
+    public Compra findByNumBoleta(Long id_boleta) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Compra.class, id_boleta);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     public List<Compra> findAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("FROM Compra", Compra.class).list();

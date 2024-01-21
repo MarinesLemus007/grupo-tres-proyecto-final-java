@@ -72,7 +72,7 @@ public class BoletaDAO {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             boleta.setUsuario(usuario);
-            session.save(boleta);
+            session.update(boleta);
             transaction.commit();
         } catch (Exception ex) {
             if (transaction != null) {
