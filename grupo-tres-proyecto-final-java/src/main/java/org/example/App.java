@@ -8,11 +8,11 @@ public class App
     public static void main( String[] args )
     {
 
-        String nombre_usuario_role = "", direccion_usuario_role = "", email_usuario_role = "", mensaje = "", nombre_producto_creacion = "", descripcion_producto_creacion = "";
-        long dni_usuario_role = 0, codigo_producto_compra = 0;
-        int respuesta_role, opcion_menu_admin, cantidad_producto_compra = 0, bucleCompra = 1;
+        String nombre_usuario_role , direccion_usuario_role, email_usuario_role, nombre_producto_creacion, descripcion_producto_creacion, mensaje = "";
+        long dni_usuario_role = 0, codigo_producto_compra;
+        int respuesta_role, opcion_menu_admin, cantidad_producto_compra, menu_continuar_compra;
         double precio_producto_creacion;
-        boolean itera_menu_inicial = false, itera_enrolamiento, itera_menu_admin_crear_producto = true, itera_cod_producto = false, itera_cantidad_compra = false;
+        boolean itera_menu_inicial = false, itera_enrolamiento, itera_menu_admin_crear_producto = true, itera_cod_producto = false, itera_cantidad_compra = false, itera_compra_cliente = true;
         List<Producto> productoExistente;
 
         Scanner scanner = new Scanner(System.in);
@@ -26,11 +26,12 @@ public class App
 
         do {
             //Menú inicial, Crear Usuario o entrar con usuario ya existente
-            System.out.println("\nBienvenido a Nuestra Tienda\n" +
-                    "seleccione la opción que desee realizar : \n" +
-                    "1. Registrarse como administrador \n" +
-                    "2. Registrarse como cliente \n" +
-                    "3. Ingresar con su cuenta");
+            System.out.println("""
+                    Bienvenido a Nuestra Tienda
+                    Seleccione la opción que desee realizar :
+                    1. Registrarse como administrador
+                    2. Registrarse como cliente
+                    3. Ingresar con su cuenta""");
             respuesta_role = scanner.nextInt();
 
             switch (respuesta_role) {
@@ -48,7 +49,7 @@ public class App
                         System.out.println("Ingrese su email");
                         email_usuario_role = scanner.nextLine();
 
-                        if (dni_usuario_role != 0 && !nombre_usuario_role.equals("") && !direccion_usuario_role.equals("") && !email_usuario_role.equals("")) {
+                        if (dni_usuario_role != 0 && !nombre_usuario_role.isEmpty() && !direccion_usuario_role.isEmpty() && !email_usuario_role.isEmpty()) {
                             //Crear Usuario
                             Usuario newUsuario;
                             if (respuesta_role == 1) {
@@ -96,13 +97,10 @@ public class App
                     scanner.nextLine();
                     Usuario usuarioExistente = usuarioDAO.findById(dni_usuario_role);
                     if (usuarioExistente != null) {
-                        System.out.println("El usuario existe en el registro.");
-                        if (usuarioExistente.getRole().equals("cliente")){
-                            Tarjeta tarjetaUsuario = tarjetaDAO.findById(usuarioExistente.getTarjeta().getId());
-                        }
+                        System.out.println("\nEl usuario existe en el registro.\n");
                         itera_menu_inicial = false;
                     } else {
-                        System.out.println("El usuario no existe en el registro.");
+                        System.out.println("\nEl usuario no existe en el registro.\n");
                         itera_menu_inicial = true;
                     }
 
@@ -118,11 +116,12 @@ public class App
         if(Objects.equals(usuarioDAO.findById(dni_usuario_role).getRole(), "admin")) {
 
             do {
-                System.out.println("\nBienvenido a Nuestra Tienda\n" +
-                        "seleccione la opción que desee realizar : \n" +
-                        "1. Crear Productos\n" +
-                        "2. Ver lista de nuestros clientes\n" +
-                        "3. Salir");
+                System.out.println("""
+                        Bienvenido a Nuestra Tienda
+                        seleccione la opción que desee realizar :
+                        1. Crear Productos
+                        2. Ver lista de nuestros clientes
+                        3. Salir""");
                 opcion_menu_admin = scanner.nextInt();
                 scanner.nextLine();
 
@@ -146,8 +145,8 @@ public class App
                                 Producto foundProducto = productoDAO.findById(newProducto.getCodigo_producto());
 
                                 System.out.println("\nSe ha creado el Producto\n" +
-                                        "Nombre : " + foundProducto.getNombre_producto() + "\n" +
-                                        "Precio : " + foundProducto.getPrecio_producto() + "\n" +
+                                        "Nombre : " + foundProducto.getNombre_producto() + ", " +
+                                        "Precio : " + foundProducto.getPrecio_producto() + ", " +
                                         "Descripción : " + foundProducto.getDescripcion_producto());
 
                                 itera_menu_admin_crear_producto = false;
@@ -157,12 +156,13 @@ public class App
                     case 2:
 
                         List<Usuario> usuarios = usuarioDAO.findByRole("cliente");
-                        System.out.println("\n A continuación, te presentamos una lista de los cientes que tenemos : \n");
+                        System.out.println("\nA continuación, te presentamos una lista de los cientes que tenemos : \n");
                         for (Usuario usuario : usuarios) {
-                            System.out.println("Nombre: " + usuario.getNombre_usuario()+"\n");
-                            System.out.println("Correo: " + usuario.getEmail_usuario()+"\n");
-                            System.out.println("Dirección: " + usuario.getDireccion_usuario()+"\n");
-                            System.out.println("---------------------------\n");
+                            System.out.println(
+                                "Nombre: " + usuario.getNombre_usuario()+ ", "+
+                                "Correo: " + usuario.getEmail_usuario()+ ", "+
+                                "Dirección: " + usuario.getDireccion_usuario()
+                            );
                         }
 
                         break;
@@ -180,24 +180,24 @@ public class App
             scanner.close();
         }else{
             //Si es cliente
-
             do {
-                System.out.println("Bienvenido a Nuestra Tienda\n" +
-                        "seleccione la opción que desee realizar :\n" +
-                        "1. Realizar Compra\n" +
-                        "2. Ver Boletas\n" +
-                        "3. Ver Saldo\n" +
-                        "4. Abonar Saldo\n" +
-                        "5. Salir");
+                System.out.println("""
+                        Bienvenido a Nuestra Tienda
+                        seleccione la opción que desee realizar :
+                        1. Realizar Compra
+                        2. Ver Boletas
+                        3. Ver Saldo
+                        4. Abonar Saldo
+                        5. Salir""");
                 int opcion_menu_cliente = scanner.nextInt();
                 scanner.nextLine();
 
                 switch (opcion_menu_cliente) {
                     case 1:
                         //Comprar Productos
-                        Compra newCompra = null;
+                        Compra newCompra;
 
-                        while (bucleCompra == 1){
+                        while (itera_compra_cliente){
                             //Productos en base de datos
                             List<Producto> productos = productoDAO.findAll();
                             System.out.println("A continuación, te presentamos una lista de los productos que tenemos en catálogo : \n");
@@ -227,11 +227,18 @@ public class App
 
                             //Consulta a cliente si desea realizar una nueva compra
                             System.out.println(
-                                    "¿Desea agregar otro producto al carrito? \n" +
-                                            "1. Sí, deseo ver más productos \n"+
-                                            "2. No, deseo pagar"
+                                    """
+                                    ¿Desea agregar otro producto al carrito?\s
+                                    1. Sí, deseo ver más productos\s
+                                    2. No, deseo pagar"""
                             );
-                            bucleCompra = scanner.nextInt();
+                            menu_continuar_compra = scanner.nextInt();
+
+                            if(menu_continuar_compra == 1){
+                                itera_compra_cliente = true;
+                            }else if(menu_continuar_compra == 2){
+                                itera_compra_cliente = false;
+                            }
                         }
 
                         // Asociar Compra con Boleta
@@ -245,7 +252,7 @@ public class App
                         ArrayList<Compra> comprasEnCarrito  = newCarrito.getArregloCarrito();
 
                         for (Compra compra : comprasEnCarrito ) {
-                           compra.setBoleta(foundBoleta);
+                            compra.setBoleta(foundBoleta);
                         }
                         foundBoleta.getCompras().addAll(comprasEnCarrito);
 
@@ -281,37 +288,33 @@ public class App
 
                         usuarioDAO = new UsuarioDAO();
 
-                        System.out.println("Historial de pedidos de: \n");
+                        System.out.println("Historial de compras: \n");
                         List<Compra> compras = compraDAO.addCompraToUsuario(dni_usuario_role);
                         for (Compra compra : compras) {
-                            System.out.println("ID: " + compra.getDni_comprador()+"\n");
-                            System.out.println("Boleta: " + compra.getBoleta().getId() +"\n");
-                            System.out.println("Fecha: " + compra.getFecha_compra()+"\n");
-                            System.out.println("Código del Producto: " + compra.getCodigo_producto_compra()+"\n");
-                            System.out.println("Cantidad de productos: " + compra.getCantidad_producto()+"\n");
-                            System.out.println("Total: " + compra.getTotal_compra()+"\n");
-                            System.out.println("---------------------------\n");
+                            System.out.println(
+                                    "Boleta : " + compra.getBoleta().getId() + ", " +
+                                    "Cantidad : " + compra.getCantidad_producto()+ ", " +
+                                    "Producto : " + productoDAO.findById(compra.getCodigo_producto_compra()).getNombre_producto() + ", " +
+                                    "Total: " + compra.getTotal_compra());
                         }
                         break;
                     case 3:
-                        List<Tarjeta> tarjetas = tarjetaDAO.saldo(dni_usuario_role);
-                        for (Tarjeta tarjeta : tarjetas) {
-                            System.out.println("\nSaldo actual: $ " + tarjeta.getAmount());
-                        }
+                        Tarjeta verSaldo = usuarioDAO.findBydni(dni_usuario_role).getTarjeta();
+                        System.out.println("\nSaldo actual: $ " + verSaldo.getAmount());
                         break;
                     case 4:
                         System.out.println("Por favor, ingrese el monto a abonar en su tarjeta.");
-                        int monto_abonar_tarjeta = 0, monto_actual_tarjeta = 0, suma_total_tarjeta = 0;
+                        int monto_abonar_tarjeta, monto_actual_tarjeta, suma_total_tarjeta;
                         monto_abonar_tarjeta = scanner.nextInt();
 
-                        Tarjeta s = usuarioDAO.findBydni(dni_usuario_role).getTarjeta();
-                        monto_actual_tarjeta = s.getAmount();
+                        Tarjeta abonarSaldo = usuarioDAO.findBydni(dni_usuario_role).getTarjeta();
+                        monto_actual_tarjeta = abonarSaldo.getAmount();
                         suma_total_tarjeta = monto_abonar_tarjeta + monto_actual_tarjeta;
-                        s.setAmount(suma_total_tarjeta);
+                        abonarSaldo.setAmount(suma_total_tarjeta);
 
-                        tarjetaDAO.update(s);
+                        tarjetaDAO.update(abonarSaldo);
 
-                        System.out.println("\nSu nuevo saldo es de: $ " + s.getAmount() + "\n");
+                        System.out.println("\nSu nuevo saldo es de: $ " + abonarSaldo.getAmount() + "\n");
                         break;
                     case 5:
                         mensaje = "Hasta Luego";

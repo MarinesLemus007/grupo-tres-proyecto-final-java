@@ -18,7 +18,6 @@ public class Carrito {
     }
 
     public void MostrarProductos(){
-        int tamanioArreglo = getArregloCarrito().size();
 
         List<Compra> compras;
         compras = getArregloCarrito();
@@ -26,7 +25,7 @@ public class Carrito {
         for (Compra compra : compras) {
             System.out.println(
                     "Cantidad: " + compra.getCantidad_producto() + "\n" +
-                    "Código de producto: " + compra.getCodigo_producto_compra()
+                    "Código de producto: " + compra.getCodigo_producto_compra() + "\n"
             );
         }
     }
