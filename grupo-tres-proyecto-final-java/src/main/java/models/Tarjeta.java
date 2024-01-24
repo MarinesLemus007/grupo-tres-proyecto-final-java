@@ -42,6 +42,8 @@ public class Tarjeta {
         return amount;
     }
 
+    public Usuario getUsuario() { return usuario;}
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -49,6 +51,8 @@ public class Tarjeta {
     public void setNumCard(String numCard) {
         this.numCard = numCard;
     }
+
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 
     public void setAmount(int amount) {
         this.amount = amount;

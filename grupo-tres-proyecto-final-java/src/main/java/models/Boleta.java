@@ -33,17 +33,4 @@ public class Boleta {
     public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 
     //Metodos
-    /*public List<String> obtenerInfoCompraConsolidada() {
-        List<String> infoConsolidada = new ArrayList<>();
-        for (Compra compra : compras) {
-            for (Producto producto : compra.getProductos()) {
-                // Procesar la información de cada producto y agregar a la lista
-                String info = "Producto: " + producto.getNombre_producto() +
-                        ", Cantidad: " + compra.getCantidad_producto() +
-                        ", Total: " + compra.getTotal_compra();
-                infoConsolidada.add(info);
-            }
-        }
-        return infoConsolidada;
-    }*/
 }

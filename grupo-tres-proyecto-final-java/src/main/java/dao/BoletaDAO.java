@@ -53,20 +53,6 @@ public class BoletaDAO {
         }
     }
 
-    /*public void update(Boleta boleta) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.update(boleta);
-            transaction.commit();
-        } catch (Exception ex) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            ex.printStackTrace();
-        }
-    }*/
-
     public void update(Boleta boleta, Usuario usuario) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

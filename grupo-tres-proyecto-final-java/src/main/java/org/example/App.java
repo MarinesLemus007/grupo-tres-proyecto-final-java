@@ -77,7 +77,7 @@ public class App
                                     "Dni : " + foundUsuario.getDni_usuario() + "\n" +
                                     "Dirección : " + foundUsuario.getDireccion_usuario() + "\n" +
                                     "Email : " + foundUsuario.getEmail_usuario() + "\n" +
-                                    "Role : " + foundUsuario.getRole());
+                                    "Role : " + foundUsuario.getRole() + "\n");
 
                             itera_enrolamiento = false;
                             itera_menu_inicial = false;
@@ -124,6 +124,7 @@ public class App
                         3. Salir""");
                 opcion_menu_admin = scanner.nextInt();
                 scanner.nextLine();
+                itera_menu_admin_crear_producto = true;
 
                 switch (opcion_menu_admin) {
                     case 1:
@@ -241,6 +242,26 @@ public class App
                             }
                         }
 
+                        //Comprobar si la tarjeta tiene saldo suficiente
+                        int saldoInicial = tarjetaDAO.findByUser(dni_usuario_role).getAmount();
+                        ArrayList<Compra> comprobarCompra = newCarrito.getArregloCarrito();
+                        double limpiarTotalCompra = 0;
+                        int saldoEvaluado = 0;
+                        for (Compra compra : comprobarCompra) {
+                            double valor_unitario = compra.getTotal_compra();
+                            //saldo en tarjeta luego de la evaluación de la compra
+                            saldoEvaluado += compra.totalCompra(usuarioDAO.findBydni(dni_usuario_role).getTarjeta()).getAmount();
+
+                            //Seteando valor a unitario
+                            compra.setTotal_compra(valor_unitario);
+                        }
+                        if(saldoEvaluado < 0){
+                            System.out.println("\nPor favor, abone saldo a su tarjeta para realizar la compra\n");
+                            newCarrito.VaciarCarrito();
+                            itera_compra_cliente = true;
+                            break;
+                        }
+
                         // Asociar Compra con Boleta
                         // Crear Boleta para el usuario
                         Boleta newBoleta = new Boleta();
@@ -283,6 +304,9 @@ public class App
                             );
                         }
 
+                        //Vaciar Carrito
+                        newCarrito.VaciarCarrito();
+                        itera_compra_cliente = true;
                         break;
                     case 2:
 

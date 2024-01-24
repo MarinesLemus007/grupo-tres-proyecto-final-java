@@ -29,4 +29,8 @@ public class Carrito {
             );
         }
     }
+
+    public void VaciarCarrito(){
+        setArregloCarrito(new ArrayList<Compra>());
+    }
 }

@@ -77,13 +77,8 @@ public class Compra {
         double total_compra_realizada = getTotal_compra() * getCantidad_producto();
         setTotal_compra(total_compra_realizada);
 
-        if (tarjetaUsuario.getAmount() >= total_compra_realizada){
-            double descCompra = tarjetaUsuario.getAmount() - this.total_compra;
-            tarjetaUsuario.setAmount((int) Math.round(descCompra));
-            return tarjetaUsuario;
-        }else {
-            System.out.println("Su monto no es suficiente para realizar la compra");
-            return tarjetaUsuario;
-        }
+        double descCompra = tarjetaUsuario.getAmount() - this.total_compra;
+        tarjetaUsuario.setAmount((int) Math.round(descCompra));
+        return tarjetaUsuario;
     }
 }

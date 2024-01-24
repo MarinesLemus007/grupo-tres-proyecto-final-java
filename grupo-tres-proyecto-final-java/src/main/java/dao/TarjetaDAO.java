@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class TarjetaDAO {
@@ -21,9 +22,11 @@ public class TarjetaDAO {
         }
     }
 
-    public Tarjeta findByUser(long usuario) {
+    public Tarjeta findByUser(long dni_usuario) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(Tarjeta.class, usuario);
+            Query<Tarjeta> query = session.createQuery("SELECT t FROM Tarjeta t WHERE t.usuario.dni_usuario = :dni_usuario", Tarjeta.class);
+            query.setParameter("dni_usuario", dni_usuario);
+            return query.uniqueResult();
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
